@@ -1,8 +1,5 @@
 #include <stdio.h>
 
-// TODO: Make this customizable through the CMake
-#define RAYLIB_RENDERING
-
 // CLAY includes
 
 // No need to include nor define this in other files
@@ -10,7 +7,7 @@
 #include "clay.h"
 
 // CLAY renderers
-#ifdef RAYLIB_RENDERING
+#ifdef RENDERER_RAYLIB
 #  include "renderers/raylib/raylib.h"
 #  include "renderers/raylib/clay_renderer_raylib.c"
 #endif
@@ -25,7 +22,7 @@ void HandleClayErrors(Clay_ErrorData errorData)
     printf("%s\n", errorData.errorText.chars);
 }
 
-#ifdef RAYLIB_RENDERING
+#ifdef RENDERER_RAYLIB
 int raylib_main(void)
 {
     // Init CLAY context
@@ -52,7 +49,7 @@ int raylib_main(void)
         ClearBackground(BLACK);
 
         // CLAY layout
-        Clay_RenderCommandArray content = vp_layout();
+        Clay_RenderCommandArray content = vp_layout(GetScreenWidth(), GetScreenHeight());
 
         // CLAY rendering
         Clay_Raylib_Render(content, fonts);
@@ -70,16 +67,16 @@ int raylib_main(void)
 
 int main(void)
 {
-#ifdef RAYLIB_RENDERING
+#ifdef RENDERER_RAYLIB
     return raylib_main();
 #endif
 
 #if 0
-#ifdef SDL2_RENDERING
+#ifdef RENDERER_SDL2
     return sdl2_main();
 #endif
 
-#ifdef SDL3_RENDERING
+#ifdef RENDERER_SDL3
     return sdl3_main();
 #endif
 #endif

@@ -1,13 +1,13 @@
 #ifndef LAYOUT_H_
 #define LAYOUT_H_
 
-Clay_RenderCommandArray vp_layout()
+Clay_RenderCommandArray vp_layout(int width, int height)
 {
     // Like Raylib, CLAY scope start
     Clay_BeginLayout();
 
     CLAY({ 
-        .layout = { .sizing = { .width = GetScreenWidth(), .height = GetScreenHeight() } },
+        .layout = { .sizing = { .width = width, .height = height } },
         .backgroundColor = { 18, 18, 18, 255 },
     }) {}
 
