@@ -1,32 +1,32 @@
-#include "renderers/raylib/raylib.h"
-#define CLAY_IMPLEMENTATION
-#include "clay.h"
-#include "renderers/raylib/clay_renderer_raylib.c"
-
 #include <stdio.h>
 
-Clay_RenderCommandArray vp_layout()
-{
-    // Like Raylib, CLAY scope start
-    Clay_BeginLayout();
+// TODO: Make this customizable through the CMake
+#define RAYLIB_RENDERING
 
-    CLAY({ 
-        .layout = { .sizing = { .width = GetScreenWidth(), .height = GetScreenHeight() } },
-        .backgroundColor = { 18, 18, 18, 255 },
-    }) {}
+// CLAY includes
 
-    // CLAY scope end, it returns the commands to render the layout
-    return Clay_EndLayout();
-}
+// No need to include nor define this in other files
+#define CLAY_IMPLEMENTATION
+#include "clay.h"
 
+// CLAY renderers
+#ifdef RAYLIB_RENDERING
+#  include "renderers/raylib/raylib.h"
+#  include "renderers/raylib/clay_renderer_raylib.c"
+#endif
 
+// Custom includes
+#include "layout.h"
+
+// CLAY error handler
 void HandleClayErrors(Clay_ErrorData errorData)
 {
     // Just logging, ignoring the error
     printf("%s\n", errorData.errorText.chars);
 }
 
-int main(void)
+#ifdef RAYLIB_RENDERING
+int raylib_main(void)
 {
     // Init CLAY context
     uint64_t totalMemorySize = Clay_MinMemorySize();
@@ -34,7 +34,7 @@ int main(void)
     Clay_Initialize(clayMemory, (Clay_Dimensions) { (float) GetScreenWidth(), (float) GetScreenHeight() }, (Clay_ErrorHandler) { HandleClayErrors, 0 });
 
     // Init Raylib renderer
-    Clay_Raylib_Initialize(800, 600, "VPILOT", FLAG_VSYNC_HINT | FLAG_WINDOW_RESIZABLE | FLAG_WINDOW_HIGHDPI | FLAG_MSAA_4X_HINT);
+    Clay_Raylib_Initialize(800, 600, "vpilot", FLAG_VSYNC_HINT | FLAG_WINDOW_RESIZABLE | FLAG_WINDOW_HIGHDPI | FLAG_MSAA_4X_HINT);
 
     // Font stuff
     Font fonts[2];
@@ -65,4 +65,22 @@ int main(void)
     Clay_Raylib_Close();
 
     return 0;
+}
+#endif
+
+int main(void)
+{
+#ifdef RAYLIB_RENDERING
+    return raylib_main();
+#endif
+
+#if 0
+#ifdef SDL2_RENDERING
+    return sdl2_main();
+#endif
+
+#ifdef SDL3_RENDERING
+    return sdl3_main();
+#endif
+#endif
 }
