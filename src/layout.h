@@ -3,9 +3,31 @@
 
 #include "clay.h"
 
-Clay_RenderCommandArray vp_layout(int w, int h)
+// Background colors
+const Clay_Color BTN_DRIVE = { 253, 218, 13, 255 };
+const Clay_Color BTN_DRIVE_HOVER = { 253, 218, 13, 192 };
+
+const Clay_Color BTN_NEUTRAL = { 0, 71, 171, 255 };
+const Clay_Color BTN_NEUTRAL_HOVER = { 0, 71, 171, 192 };
+
+const Clay_Color BTN_LAUNCH = { 210, 43, 43, 255 };
+const Clay_Color BTN_LAUNCH_HOVER = { 210, 43, 43, 192 };
+
+const Clay_Color BTN_TAG = { 210, 43, 43, 255 };
+const Clay_Color BTN_TAG_HOVER = { 210, 43, 43, 192 };
+
+const Clay_Color BTN_OK = { 64, 128, 64, 255 };
+const Clay_Color BTN_OK_HOVER = { 64, 128, 64, 192 };
+
+const Clay_Color SELECTOR = { 64, 64, 64, 255 };
+const Clay_Color SELECTOR_HOVER = { 64, 64, 64, 192 };
+
+const Clay_Color WHITE = { 255, 255, 255, 255 };
+const Clay_Color BLACK = { 0, 0, 0, 255 };
+
+Clay_RenderCommandArray vp_layout()
 {
-    // Like Raylib, CLAY scope start
+    // CLAY scope start
     Clay_BeginLayout();
 
     // Declarative layout
@@ -14,25 +36,80 @@ Clay_RenderCommandArray vp_layout(int w, int h)
             .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
             .layoutDirection = CLAY_TOP_TO_BOTTOM,
         },
-        .backgroundColor = { 18, 18, 18, 255 },
     }) {
         CLAY({
             .layout = { 
-                .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_FIXED(h / 8) },
+                .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_PERCENT(0.125) },
                 .layoutDirection = CLAY_LEFT_TO_RIGHT,
             },
-            .backgroundColor = { 128, 64, 64, 255 },
         }) {
-            // Insert here the two upper buttons
+            CLAY({
+                .layout = {
+                    .sizing = { .width = CLAY_SIZING_PERCENT(0.5), .height = CLAY_SIZING_GROW() },
+                    .childAlignment = { .x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_CENTER }
+                },
+                .backgroundColor = Clay_Hovered() ? BTN_DRIVE_HOVER : BTN_DRIVE,
+            }) {
+                CLAY_TEXT(
+                    CLAY_STRING("DRIVE"),
+                    CLAY_TEXT_CONFIG({
+                        .fontSize = 24,
+                        .textColor = BLACK,
+                    })
+                );
+            }
+            CLAY({
+                .layout = {
+                    .sizing = { .width = CLAY_SIZING_PERCENT(0.5), .height = CLAY_SIZING_GROW() },
+                    .childAlignment = { .x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_CENTER }
+                },
+                .backgroundColor = Clay_Hovered() ? BTN_NEUTRAL_HOVER : BTN_NEUTRAL,
+            }) {
+                CLAY_TEXT(
+                    CLAY_STRING("NEUTRAL"),
+                    CLAY_TEXT_CONFIG({
+                        .fontSize = 24,
+                        .textColor = WHITE,
+                    })
+                );
+            }
         }
         CLAY({
             .layout = { 
-                .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_FIXED(h / 8) },
+                .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_PERCENT(0.125) },
                 .layoutDirection = CLAY_LEFT_TO_RIGHT,
             },
-            .backgroundColor = { 128, 32, 32, 255 },
         }) {
-            // Insert here the two central buttons
+            CLAY({
+                .layout = {
+                    .sizing = { .width = CLAY_SIZING_PERCENT(0.5), .height = CLAY_SIZING_GROW() },
+                    .childAlignment = { .x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_CENTER },
+                },
+                .backgroundColor = Clay_Hovered() ? BTN_LAUNCH_HOVER : BTN_LAUNCH,
+            }) {
+                CLAY_TEXT(
+                    CLAY_STRING("LAUNCH"),
+                    CLAY_TEXT_CONFIG({
+                        .fontSize = 24,
+                        .textColor = BLACK,
+                    })
+                );
+            }
+            CLAY({
+                .layout = {
+                    .sizing = { .width = CLAY_SIZING_PERCENT(0.5), .height = CLAY_SIZING_GROW() },
+                    .childAlignment = { .x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_CENTER }
+                },
+                .backgroundColor = Clay_Hovered() ? BTN_TAG_HOVER : BTN_TAG,
+            }) {
+                CLAY_TEXT(
+                    CLAY_STRING("TAG"),
+                    CLAY_TEXT_CONFIG({
+                        .fontSize = 24,
+                        .textColor = BLACK,
+                    })
+                );
+            }
         }
         CLAY({
             .layout = { 
@@ -45,53 +122,99 @@ Clay_RenderCommandArray vp_layout(int w, int h)
         }
         CLAY({
             .layout = { 
-                .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_FIXED(h / 4) },
+                .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_PERCENT(0.25) },
                 .layoutDirection = CLAY_LEFT_TO_RIGHT,
             },
         }) {
             CLAY({
                 .layout = { 
-                    .sizing = { .width = CLAY_SIZING_FIXED(w / 4), .height = CLAY_SIZING_GROW() },
+                    .sizing = { .width = CLAY_SIZING_PERCENT(0.3), .height = CLAY_SIZING_GROW() },
+                    .childAlignment = { .x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_CENTER },
                 },
-                .backgroundColor = { 200, 64, 64, 255 },
+                .backgroundColor = { 128, 192, 128, 255 },
             }) {
-                // Insert here downshift
+                CLAY_TEXT(
+                    CLAY_STRING("DOWN"),
+                    CLAY_TEXT_CONFIG({
+                        .fontSize = 24,
+                        .textColor = BLACK,
+                    })
+                );
             }
             CLAY({
                 .layout = { 
                     .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
+                    .layoutDirection = CLAY_TOP_TO_BOTTOM,
                 },
-                .backgroundColor = { 150, 255, 64, 255 },
             }) {
-                // OK button on top and two selector menu on bottom
+                CLAY({
+                    .layout = {
+                        .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
+                        .childAlignment = { .x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_CENTER },
+                    },
+                    .backgroundColor = Clay_Hovered() ? BTN_OK_HOVER : BTN_OK,
+                }) {
+                    CLAY_TEXT(
+                        CLAY_STRING("OK"),
+                        CLAY_TEXT_CONFIG({
+                            .fontSize = 24,
+                            .textColor = WHITE,
+                        })
+                    );
+                }
+                CLAY({
+                    .layout = {
+                        .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
+                    },
+                }) {
+                    CLAY({
+                        .layout = { 
+                            .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
+                            .childAlignment = { .x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_CENTER },
+                        },
+                        .backgroundColor = Clay_Hovered() ? SELECTOR_HOVER : SELECTOR,
+                    }) {
+                        CLAY_TEXT(
+                            CLAY_STRING("GAS CURVE"),
+                            CLAY_TEXT_CONFIG({
+                                .fontSize = 24,
+                                .textColor = WHITE,
+                            })
+                        );
+                    }
+                    CLAY({
+                        .layout = { 
+                            .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
+                            .childAlignment = { .x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_CENTER },
+                        },
+                        .backgroundColor = Clay_Hovered() ? SELECTOR_HOVER : SELECTOR,
+                    }) {
+                        CLAY_TEXT(
+                            CLAY_STRING("MISSION"),
+                            CLAY_TEXT_CONFIG({
+                                .fontSize = 24,
+                                .textColor = WHITE,
+                            })
+                        );
+                    }
+                }
             }
             CLAY({
                 .layout = { 
-                    .sizing = { .width = CLAY_SIZING_FIXED(w / 4), .height = CLAY_SIZING_GROW() },
+                    .sizing = { .width = CLAY_SIZING_PERCENT(0.3), .height = CLAY_SIZING_GROW() },
+                    .childAlignment = { .x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_CENTER },
                 },
-                .backgroundColor = { 200, 64, 64, 255 },
+                .backgroundColor = { 128, 192, 128, 255 },
             }) {
-                // Insert here upshift
+                CLAY_TEXT(
+                    CLAY_STRING("UP"),
+                    CLAY_TEXT_CONFIG({
+                        .fontSize = 24,
+                        .textColor = BLACK,
+                    })
+                );
             }
         }
-        /* CLAY({ */
-        /*     .layout = { */ 
-        /*         .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_FIXED(h / 8) }, */
-        /*         .layoutDirection = CLAY_LEFT_TO_RIGHT, */
-        /*     }, */
-        /*     .backgroundColor = { 128, 64, 64, 255 }, */
-        /* }) { */
-        /*     // Insert here the ok button */
-        /* } */
-        /* CLAY({ */
-        /*     .layout = { */ 
-        /*         .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_FIXED(h / 8) }, */
-        /*         .layoutDirection = CLAY_LEFT_TO_RIGHT, */
-        /*     }, */
-        /*     .backgroundColor = { 128, 32, 32, 255 }, */
-        /* }) { */
-        /*     // Insert here the upshift and downshift */
-        /* } */
     }
 
     // CLAY scope end, it returns the commands to render the layout

@@ -54,7 +54,7 @@ int raylib_main(void)
 
         // CLAY layout
         Clay_SetLayoutDimensions((Clay_Dimensions) { (float) GetScreenWidth(), (float) GetScreenHeight() });
-        Clay_RenderCommandArray content = vp_layout(GetScreenWidth(), GetScreenHeight());
+        Clay_RenderCommandArray content = vp_layout();
 
         // CLAY rendering
         Clay_Raylib_Render(content, fonts);
@@ -162,6 +162,11 @@ int sdl2_main(void)
     {
         SDL_GetWindowSize(window, &width, &height);
 
+        int mouseX = 0;
+        int mouseY = 0;
+        bool isMouseDown = false;
+        SDL_GetMouseState(&mouseX, &mouseY);
+
         // SDL2 events
         SDL_Event event;
         while (SDL_PollEvent(&event))
@@ -175,7 +180,8 @@ int sdl2_main(void)
 
         // CLAY layout
         Clay_SetLayoutDimensions((Clay_Dimensions) { (float) width, (float) height });
-        Clay_RenderCommandArray content = vp_layout(width, height);
+        Clay_SetPointerState((Clay_Vector2) { mouseX, mouseY }, isMouseDown);
+        Clay_RenderCommandArray content = vp_layout();
 
         // Clearing the background
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
