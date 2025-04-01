@@ -285,7 +285,7 @@ Clay_RenderCommandArray vp_layout()
                             },
                             .border = {
                                 .color = COLOR_WHITE,
-                                .width = { 0, 0, 2, 2, 2 },
+                                .width = { 2, 0, 2, 2, 2 },
                             },
                         }) {
                             CLAY_TEXT(
@@ -303,7 +303,7 @@ Clay_RenderCommandArray vp_layout()
                             },
                             .border = {
                                 .color = COLOR_WHITE,
-                                .width = { 0, 0, 2, 2, 2 },
+                                .width = { 0, 2, 2, 2, 2 },
                             },
                         }) {
                             CLAY_TEXT(
@@ -328,7 +328,7 @@ Clay_RenderCommandArray vp_layout()
                             },
                             .border = {
                                 .color = COLOR_WHITE,
-                                .width = { 0, 0, 2, 2, 2 },
+                                .width = { 2, 0, 2, 2, 2 },
                             },
                         }) {
                             CLAY_TEXT(
@@ -346,7 +346,7 @@ Clay_RenderCommandArray vp_layout()
                             },
                             .border = {
                                 .color = COLOR_WHITE,
-                                .width = { 0, 0, 2, 2, 2 },
+                                .width = { 0, 2, 2, 2, 2 },
                             },
                         }) {
                             CLAY_TEXT(
@@ -371,7 +371,7 @@ Clay_RenderCommandArray vp_layout()
                             },
                             .border = {
                                 .color = COLOR_WHITE,
-                                .width = { 0, 0, 2, 2, 2 },
+                                .width = { 2, 0, 2, 2, 2 },
                             },
                         }) {
                             CLAY_TEXT(
@@ -389,7 +389,7 @@ Clay_RenderCommandArray vp_layout()
                             },
                             .border = {
                                 .color = COLOR_WHITE,
-                                .width = { 0, 0, 2, 2, 2 },
+                                .width = { 0, 2, 2, 2, 2 },
                             },
                         }) {
                             CLAY_TEXT(
@@ -414,7 +414,7 @@ Clay_RenderCommandArray vp_layout()
                             },
                             .border = {
                                 .color = COLOR_WHITE,
-                                .width = { 0, 0, 2, 2, 2 },
+                                .width = { 2, 0, 2, 2, 2 },
                             },
                         }) {
                             CLAY_TEXT(
@@ -432,7 +432,7 @@ Clay_RenderCommandArray vp_layout()
                             },
                             .border = {
                                 .color = COLOR_WHITE,
-                                .width = { 0, 0, 2, 2, 2 },
+                                .width = { 0, 2, 2, 2, 2 },
                             },
                         }) {
                             CLAY_TEXT(
