@@ -45,6 +45,9 @@ int raylib_main(void)
     SetTextureFilter(fonts[1].texture, TEXTURE_FILTER_BILINEAR);
     Clay_SetMeasureTextFunction(Raylib_MeasureText, fonts);
 
+    // Limiting the FPS rate
+    SetTargetFPS(60);
+
     // Game Loop
     while (!WindowShouldClose())
     {
@@ -54,6 +57,10 @@ int raylib_main(void)
 
         // CLAY layout
         Clay_SetLayoutDimensions((Clay_Dimensions) { (float) GetScreenWidth(), (float) GetScreenHeight() });
+
+        bool isMouseDown = IsMouseButtonPressed(MOUSE_BUTTON_LEFT);
+        Clay_SetPointerState((Clay_Vector2) { GetMouseX(), GetMouseY() }, isMouseDown);
+
         Clay_RenderCommandArray content = vp_layout();
 
         // CLAY rendering
@@ -173,8 +180,8 @@ int sdl2_main(void)
         {
             switch (event.type)
             {
-            case SDL_QUIT:
-                goto QUIT;
+                case SDL_QUIT:
+                    goto QUIT;
             }
         }
 
