@@ -54,7 +54,7 @@ int raylib_main(void)
 
         // CLAY layout
         Clay_SetLayoutDimensions((Clay_Dimensions) { (float) GetScreenWidth(), (float) GetScreenHeight() });
-        Clay_RenderCommandArray content = vp_layout();
+        Clay_RenderCommandArray content = vp_layout(GetScreenWidth(), GetScreenHeight());
 
         // CLAY rendering
         Clay_Raylib_Render(content, fonts);
@@ -175,7 +175,7 @@ int sdl2_main(void)
 
         // CLAY layout
         Clay_SetLayoutDimensions((Clay_Dimensions) { (float) width, (float) height });
-        Clay_RenderCommandArray content = vp_layout();
+        Clay_RenderCommandArray content = vp_layout(width, height);
 
         // Clearing the background
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
