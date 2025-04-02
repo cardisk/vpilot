@@ -3,7 +3,10 @@
 ## Important
 - [X] Support for SDL2 rendering
 - [X] Friendly layout
-- [ ] SocketCAN to send actions
+- [X] SocketCAN to send actions
+
+- [ ] Msg to CAN
+- [ ] Default action for buttons when CAN not available
 
 ## Maybe
 - [ ] Support for SDL3 rendering

@@ -75,3 +75,9 @@ if (RENDERER MATCHES "SDL2")
         SDL2_image
     )
 endif()
+
+if (LINUX)
+    add_compile_definitions(CAN_AVAILABLE)
+else()
+    message(WARNING "No socketCAN implementations for your system")
+endif()
