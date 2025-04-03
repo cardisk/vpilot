@@ -72,6 +72,15 @@ int can_init(const char *interface_name)
     return socket;
 }
 
+void can_close(int socket)
+{
+    int close_result = close(socket);
+    if (close_result < 0)
+    {
+        ERR("%s", strerror(errno));
+    }
+}
+
 int can_read(int socket, struct can_frame *frame)
 {
     struct can_frame frame;
@@ -94,5 +103,7 @@ int can_read(int socket, struct can_frame *frame)
 
     return CAN_READ_SUCCESS;
 }
+
+
 
 #endif // CAN_H_
