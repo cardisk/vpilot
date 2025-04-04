@@ -64,20 +64,24 @@ add_executable(${PROJECT_NAME} ${SOURCES})
 target_compile_options(${PROJECT_NAME} PUBLIC)
 target_include_directories(${PROJECT_NAME} PUBLIC .)
 
+target_link_libraries(${PROJECT_NAME} PUBLIC m)
+
 if (RENDERER MATCHES "Raylib")
-    target_link_libraries(${PROJECT_NAME} PUBLIC raylib)
+    target_link_libraries(${PROJECT_NAME} PUBLIC
+        raylib
+    )
 endif()
 
 if (RENDERER MATCHES "SDL2")
-    target_link_libraries(vpilot PUBLIC
+    target_link_libraries(${PROJECT_NAME} PUBLIC
         SDL2
         SDL2_ttf
         SDL2_image
     )
 endif()
 
-if (LINUX)
-    add_compile_definitions(CAN_AVAILABLE)
-else()
-    message(WARNING "No socketCAN implementations for your system")
-endif()
+# if (LINUX)
+#     add_compile_definitions(CAN_AVAILABLE)
+# else()
+#     message(WARNING "No socketCAN implementations for your system")
+# endif()

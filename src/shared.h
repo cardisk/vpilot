@@ -9,8 +9,8 @@
 #endif
 
 #ifdef RENDERER_SDL2
-#  define LOG(args...) fprintf(stdout, args)
-#  define ERR(args...) fprintf(stderr, args)
+#  define LOG(args...) SDL_Log(args)
+#  define ERR(args...) SDL_Log(args)
 #endif
 
 #endif // SHARED_H_

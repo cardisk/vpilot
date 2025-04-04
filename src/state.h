@@ -72,12 +72,12 @@ struct VPilot_
 typedef struct VPilot_ VPilot;
 
 // Globals
-const VPilot application_state = {0};
+VPilot application_state = {0};
 
 int vp_init()
 {
 #ifdef CAN_AVAILABLE
-    int fd = can_init();
+    int fd = can_init("vcan0");
 
     // Just propagate the failure
     if (fd < 0) return -1;
@@ -129,7 +129,7 @@ int vp_update()
                 };
 
                 bool found = false;
-                array_foreach(&application_state.errors, Error, it)
+                array_foreach(&application_state.logs.errors, Error, it)
                 {
                     if (memcmp(&e, it, sizeof(Error)) == 0)
                     {

@@ -30,8 +30,8 @@
 
 int can_init(const char *interface_name)
 {
-    int socket = socket(PF_CAN, SOCK_RAW, CAN_RAW);
-    if (socket < 0)
+    int sock = socket(PF_CAN, SOCK_RAW, CAN_RAW);
+    if (sock < 0)
     {
         ERR("%s", strerror(errno));
         return -1;
@@ -41,35 +41,35 @@ int can_init(const char *interface_name)
     struct ifreq ifr;
 
     strcpy(ifr.ifr_name, interface_name);
-    ioctl(s, SIOCGIFINDEX, &ifr);
+    ioctl(sock, SIOCGIFINDEX, &ifr);
 
     memset(&addr, 0, sizeof(addr));
 
     addr.can_family = AF_CAN;
 	addr.can_ifindex = ifr.ifr_ifindex;
 
-    int bind_result = bind(socket, (struct sockaddr *) &addr, sizeof(addr));
+    int bind_result = bind(sock, (struct sockaddr *) &addr, sizeof(addr));
     if (bind_result < 0)
     {
-        ERR("%s", strerror(errno));
+        ERR("%s: %s", interface_name, strerror(errno));
         return -1;
     }
 
-    int socket_flags = fcntl(socket, F_GETFL, 0);
-    if (flags < 0)
+    int sock_flags = fcntl(sock, F_GETFL, 0);
+    if (sock_flags < 0)
     {
         ERR("%s", strerror(errno));
         return -1;
     }
 
-    int nonblocking_result = fcntl(fd, F_SETFL, flags | O_NONBLOCK);
+    int nonblocking_result = fcntl(sock, F_SETFL, sock_flags | O_NONBLOCK);
     if (nonblocking_result < 0)
     {
         ERR("%s", strerror(errno));
         return -1;
     }
 
-    return socket;
+    return sock;
 }
 
 void can_close(int socket)
@@ -83,8 +83,6 @@ void can_close(int socket)
 
 int can_read(int socket, struct can_frame *frame)
 {
-    struct can_frame frame;
-
     int nbytes = read(socket, frame, sizeof(struct can_frame));
     if (nbytes == 0)
         return CAN_READ_SKIP;
@@ -103,7 +101,5 @@ int can_read(int socket, struct can_frame *frame)
 
     return CAN_READ_SUCCESS;
 }
-
-
 
 #endif // CAN_H_
