@@ -22,7 +22,7 @@
 #include "layout.h"
 
 // CLAY error handler
-void HandleClayErrors(Clay_ErrorData errorData)
+void clay_handle_errors(Clay_ErrorData errorData)
 {
     // Just logging, ignoring the error
     ERR("%s\n", errorData.errorText.chars);
@@ -34,7 +34,7 @@ int raylib_main(void)
     // Init CLAY context
     uint64_t totalMemorySize = Clay_MinMemorySize();
     Clay_Arena clayMemory = Clay_CreateArenaWithCapacityAndMemory(totalMemorySize, malloc(totalMemorySize));
-    Clay_Initialize(clayMemory, (Clay_Dimensions) { (float) GetScreenWidth(), (float) GetScreenHeight() }, (Clay_ErrorHandler) { HandleClayErrors, 0 });
+    Clay_Initialize(clayMemory, (Clay_Dimensions) { (float) GetScreenWidth(), (float) GetScreenHeight() }, (Clay_ErrorHandler) { clay_handle_errors, 0 });
 
     // Init Raylib renderer
     Clay_Raylib_Initialize(800, 600, "vpilot", FLAG_VSYNC_HINT | FLAG_WINDOW_RESIZABLE | FLAG_WINDOW_HIGHDPI | FLAG_MSAA_4X_HINT);
@@ -50,6 +50,22 @@ int raylib_main(void)
     // Game Loop
     while (!WindowShouldClose())
     {
+        switch (vp_update())
+        {
+            case VP_UPDATE_FAIL:
+                // Some error occured, stopping...
+                CloseWindow();
+                break;
+
+            case VP_UPDATE_SKIP:
+                // Nothing to read...
+                continue;
+
+            case VP_UPDATE_SUCCESS:
+                // Ok to render
+                break;
+        }
+
         // Raylib drawing scope start
         BeginDrawing();
         ClearBackground(BLACK);
@@ -144,7 +160,7 @@ int sdl2_main(void)
     int width  = 0; 
     int height = 0;
     SDL_GetWindowSize(window, &width, &height);
-    Clay_Initialize(clayMemory, (Clay_Dimensions) { (float) width, (float) height }, (Clay_ErrorHandler) { HandleClayErrors, 0 });
+    Clay_Initialize(clayMemory, (Clay_Dimensions) { (float) width, (float) height }, (Clay_ErrorHandler) { clay_handle_errors, 0 });
 
     // Font stuff
     TTF_Font *font = TTF_OpenFont("../resources/Roboto-Regular.ttf", 16);
@@ -166,6 +182,21 @@ int sdl2_main(void)
     // Game loop
     while (true)
     {
+        switch (vp_update())
+        {
+            case VP_UPDATE_FAIL:
+                // Some error occured, stopping...
+                goto QUIT;
+
+            case VP_UPDATE_SKIP:
+                // Nothing to read...
+                continue;
+
+            case VP_UPDATE_SUCCESS:
+                // Ok to render
+                break;
+        }
+
         SDL_GetWindowSize(window, &width, &height);
 
         int mouseX = 0;
@@ -218,17 +249,22 @@ int main(void)
     // Init application state
     if (vp_init() < 0) return 1;
 
+    int exec_result;
+
 #ifdef RENDERER_RAYLIB
-    return raylib_main();
+    exec_result = raylib_main();
 #endif
 
 #ifdef RENDERER_SDL2
-    return sdl2_main();
+    exec_result = sdl2_main();
 #endif
 
 #if 0
 #ifdef RENDERER_SDL3
-    return sdl3_main();
+    exec_result = sdl3_main();
 #endif
 #endif
+
+    vp_destroy();
+    return exec_result;
 }

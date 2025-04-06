@@ -61,6 +61,6 @@ while(0)
     for (type *it_name = (arr)->ptr; it_name < (arr)->ptr + (arr)->length; it_name++)
 
 #define array_clear(arr) arr->length = 0
-#define array_free(arr) (arr->ptr) ? free(arr->ptr) : 0
+#define array_free(arr) (arr.ptr) ? free(arr.ptr), 1 : 0
 
 #endif // ARRAY_H_

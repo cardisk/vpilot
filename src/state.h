@@ -225,4 +225,13 @@ int vp_update()
     return VP_UPDATE_SUCCESS;
 }
 
+void vp_destroy()
+{
+    array_free(application_state.logs.errors);
+
+#ifdef CAN_AVAILABLE
+    can_close(application_state.can_socket);
+#endif
+}
+
 #endif // STATE_H_

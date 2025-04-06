@@ -7,6 +7,7 @@
 // Custom includes
 #include "shared.h"
 #include "actions.h"
+#include "state.h"
 
 // Components specific colors
 const Clay_Color BTN_DRIVE = { 253, 218, 13, 255 };
@@ -65,7 +66,11 @@ Clay_RenderCommandArray vp_layout()
                 },
                 .backgroundColor = Clay_Hovered() ? BTN_DRIVE_HOVER : BTN_DRIVE,
             }) {
-                Clay_OnHover(&DriveAction, CLAY_NULL);
+#ifdef CAN_AVAILABLE
+                Clay_OnHover(&drive_action, CLAY_NULL);
+#else
+                Clay_OnHover(&clay_log_action, CLAY_NULL);
+#endif
                 CLAY_TEXT(
                     CLAY_STRING("DRIVE"),
                     CLAY_TEXT_CONFIG({
@@ -82,7 +87,11 @@ Clay_RenderCommandArray vp_layout()
                 },
                 .backgroundColor = Clay_Hovered() ? BTN_NEUTRAL_HOVER : BTN_NEUTRAL,
             }) {
-                Clay_OnHover(&NeutralAction, CLAY_NULL);
+#ifdef CAN_AVAILABLE
+                Clay_OnHover(&neutral_action, CLAY_NULL);
+#else
+                Clay_OnHover(&clay_log_action, CLAY_NULL);
+#endif
                 CLAY_TEXT(
                     CLAY_STRING("NEUTRAL"),
                     CLAY_TEXT_CONFIG({
@@ -106,7 +115,11 @@ Clay_RenderCommandArray vp_layout()
                 },
                 .backgroundColor = Clay_Hovered() ? BTN_LAUNCH_HOVER : BTN_LAUNCH,
             }) {
-                Clay_OnHover(&LaunchAction, CLAY_NULL);
+#ifdef CAN_AVAILABLE
+                Clay_OnHover(&launch_action, CLAY_NULL);
+#else
+                Clay_OnHover(&clay_log_action, CLAY_NULL);
+#endif
                 CLAY_TEXT(
                     CLAY_STRING("LAUNCH"),
                     CLAY_TEXT_CONFIG({
@@ -123,7 +136,11 @@ Clay_RenderCommandArray vp_layout()
                 },
                 .backgroundColor = Clay_Hovered() ? BTN_FORCED_GEAR_HOVER : BTN_FORCED_GEAR,
             }) {
-                Clay_OnHover(&ForcedGearAction, CLAY_NULL);
+#ifdef CAN_AVAILABLE
+                Clay_OnHover(&forced_gear_action, CLAY_NULL);
+#else
+                Clay_OnHover(&clay_log_action, CLAY_NULL);
+#endif
                 CLAY_TEXT(
                     CLAY_STRING("FORCED GEAR"),
                     CLAY_TEXT_CONFIG({
@@ -140,7 +157,11 @@ Clay_RenderCommandArray vp_layout()
                 },
                 .backgroundColor = Clay_Hovered() ? BTN_TAG_HOVER : BTN_TAG,
             }) {
-                Clay_OnHover(&TagAction, CLAY_NULL);
+#ifdef CAN_AVAILABLE
+                Clay_OnHover(&tag_action, CLAY_NULL);
+#else
+                Clay_OnHover(&clay_log_action, CLAY_NULL);
+#endif
                 CLAY_TEXT(
                     CLAY_STRING("TAG"),
                     CLAY_TEXT_CONFIG({
@@ -620,7 +641,11 @@ Clay_RenderCommandArray vp_layout()
                 },
                 .backgroundColor = Clay_Hovered() ?  GEAR_SHIFT_HOVER : GEAR_SHIFT,
             }) {
-                Clay_OnHover(&GearAction, CLAY_NULL);
+#ifdef CAN_AVAILABLE
+                Clay_OnHover(&gear_action, (intptr_t) -1);
+#else
+                Clay_OnHover(&clay_log_action, CLAY_NULL);
+#endif
                 CLAY_TEXT(
                     CLAY_STRING("DOWN"),
                     CLAY_TEXT_CONFIG({
@@ -643,7 +668,11 @@ Clay_RenderCommandArray vp_layout()
                     },
                     .backgroundColor = Clay_Hovered() ? BTN_OK_HOVER : BTN_OK,
                 }) {
-                    Clay_OnHover(&OkAction, CLAY_NULL);
+#ifdef CAN_AVAILABLE
+                    Clay_OnHover(&ok_action, CLAY_NULL);
+#else
+                    Clay_OnHover(&clay_log_action, CLAY_NULL);
+#endif
                     CLAY_TEXT(
                         CLAY_STRING("OK"),
                         CLAY_TEXT_CONFIG({
@@ -665,7 +694,11 @@ Clay_RenderCommandArray vp_layout()
                         },
                         .backgroundColor = Clay_Hovered() ? SELECTOR_HOVER : SELECTOR,
                     }) {
-                        Clay_OnHover(&GasCurveAction, CLAY_NULL);
+#ifdef CAN_AVAILABLE
+                        Clay_OnHover(&gas_curve_action, CLAY_NULL);
+#else
+                        Clay_OnHover(&clay_log_action, CLAY_NULL);
+#endif
                         CLAY_TEXT(
                             CLAY_STRING("GAS CURVE"),
                             CLAY_TEXT_CONFIG({
@@ -682,7 +715,11 @@ Clay_RenderCommandArray vp_layout()
                         },
                         .backgroundColor = Clay_Hovered() ? SELECTOR_HOVER : SELECTOR,
                     }) {
-                        Clay_OnHover(&MissionAction, CLAY_NULL);
+#ifdef CAN_AVAILABLE
+                        Clay_OnHover(&mission_action, CLAY_NULL);
+#else
+                        Clay_OnHover(&clay_log_action, CLAY_NULL);
+#endif
                         CLAY_TEXT(
                             CLAY_STRING("MISSION"),
                             CLAY_TEXT_CONFIG({
@@ -701,7 +738,11 @@ Clay_RenderCommandArray vp_layout()
                 },
                 .backgroundColor = Clay_Hovered() ? GEAR_SHIFT_HOVER : GEAR_SHIFT,
             }) {
-                Clay_OnHover(&GearAction, CLAY_NULL);
+#ifdef CAN_AVAILABLE
+                Clay_OnHover(&gear_action, (intptr_t) 1);
+#else
+                Clay_OnHover(&clay_log_action, CLAY_NULL);
+#endif
                 CLAY_TEXT(
                     CLAY_STRING("UP"),
                     CLAY_TEXT_CONFIG({
