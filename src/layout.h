@@ -8,6 +8,7 @@
 #include "shared.h"
 #include "actions.h"
 #include "state.h"
+#include "conversion.h"
 
 // Components specific colors
 const Clay_Color BTN_DRIVE = { 253, 218, 13, 255 };
@@ -39,6 +40,7 @@ const Clay_Color COLOR_WHITE = { 255, 255, 255, 255 };
 const Clay_Color COLOR_BLACK = { 0, 0, 0, 255 };
 const Clay_Color COLOR_SOFT_BLACK = { 18, 18, 18, 255 };
 const Clay_Color COLOR_RED = { 255, 0, 0, 255 };
+const Clay_Color COLOR_GREEN = { 0, 255, 0, 255 };
 
 Clay_RenderCommandArray vp_layout()
 {
@@ -218,8 +220,10 @@ Clay_RenderCommandArray vp_layout()
                             .width = CLAY_BORDER_ALL(2),
                         },
                     }) {
+                        int_to_str(application_state.engine.rpm);
+
                         CLAY_TEXT(
-                            CLAY_STRING("0"),
+                            buffer_to_clay_string(),
                             CLAY_TEXT_CONFIG({
                                 .fontSize = 36,
                                 .textColor = COLOR_WHITE,
@@ -244,6 +248,7 @@ Clay_RenderCommandArray vp_layout()
                             .width = CLAY_BORDER_ALL(2),
                         },
                     }) {
+                        // TODO: discover what this value is
                         CLAY_TEXT(
                             CLAY_STRING("0"),
                             CLAY_TEXT_CONFIG({
@@ -287,8 +292,10 @@ Clay_RenderCommandArray vp_layout()
                             .width = CLAY_BORDER_ALL(2),
                         },
                     }) {
+                        int_to_str(application_state.temperature.water);
+
                         CLAY_TEXT(
-                            CLAY_STRING("0"),
+                            buffer_to_clay_string(),
                             CLAY_TEXT_CONFIG({
                                 .fontSize = 36,
                                 .textColor = COLOR_WHITE,
@@ -348,8 +355,10 @@ Clay_RenderCommandArray vp_layout()
                                 .width = { 0, 2, 2, 2, 2 },
                             },
                         }) {
+                            float_to_str(application_state.pressure.oil);
+
                             CLAY_TEXT(
-                                CLAY_STRING("0"),
+                                buffer_to_clay_string(),
                                 CLAY_TEXT_CONFIG({
                                     .fontSize = 18,
                                     .textColor = COLOR_WHITE,
@@ -391,8 +400,10 @@ Clay_RenderCommandArray vp_layout()
                                 .width = { 0, 2, 2, 2, 2 },
                             },
                         }) {
+                            float_to_str(application_state.pressure.manifold);
+
                             CLAY_TEXT(
-                                CLAY_STRING("0"),
+                                buffer_to_clay_string(),
                                 CLAY_TEXT_CONFIG({
                                     .fontSize = 18,
                                     .textColor = COLOR_WHITE,
@@ -434,8 +445,10 @@ Clay_RenderCommandArray vp_layout()
                                 .width = { 0, 2, 2, 2, 2 },
                             },
                         }) {
+                            float_to_str(application_state.pressure.fuel);
+
                             CLAY_TEXT(
-                                CLAY_STRING("0"),
+                                buffer_to_clay_string(),
                                 CLAY_TEXT_CONFIG({
                                     .fontSize = 18,
                                     .textColor = COLOR_WHITE,
@@ -477,8 +490,10 @@ Clay_RenderCommandArray vp_layout()
                                 .width = { 0, 2, 2, 2, 2 },
                             },
                         }) {
+                            float_to_str(application_state.battery.voltage_12V);
+
                             CLAY_TEXT(
-                                CLAY_STRING("0"),
+                                buffer_to_clay_string(),
                                 CLAY_TEXT_CONFIG({
                                     .fontSize = 18,
                                     .textColor = COLOR_WHITE,
@@ -522,11 +537,19 @@ Clay_RenderCommandArray vp_layout()
                             .width = CLAY_BORDER_ALL(2),
                         },
                     }) {
+                        int_to_str(application_state.engine.gear);
+
+                        Clay_String text;
+                        if (application_state.engine.gear == 0)
+                            text = CLAY_STRING("N");
+                        else
+                            text = buffer_to_clay_string();
+
                         CLAY_TEXT(
-                            CLAY_STRING("N"),
+                            text,
                             CLAY_TEXT_CONFIG({
                                 .fontSize = 48,
-                                .textColor = COLOR_WHITE,
+                                .textColor = COLOR_GREEN,
                             })
                         );
                     }
@@ -548,7 +571,7 @@ Clay_RenderCommandArray vp_layout()
                         },
                     }) {
                         CLAY_TEXT(
-                            CLAY_STRING("BRAKE BIAS"),
+                            CLAY_STRING("BRAKE BIAS (%)"),
                             CLAY_TEXT_CONFIG({
                                 .fontSize = 18,
                                 .textColor = COLOR_RED,
@@ -559,14 +582,22 @@ Clay_RenderCommandArray vp_layout()
                         .layout = {
                             .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
                             .childAlignment = { .x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_CENTER },
+                            .layoutDirection = CLAY_LEFT_TO_RIGHT,
                         },
                         .border = {
                             .color = COLOR_WHITE,
                             .width = CLAY_BORDER_ALL(2),
                         },
                     }) {
+                        float ant_coeff  = 8.0 * 24.0 * 24.0 * 220.0;
+                        float rear_coeff = 4.0 * 27.0 * 27.0 * 200.0;
+
+                        int brake_bias = (application_state.brake.front_pressure * 100.0f * ant_coeff) / ((application_state.brake.front_pressure * ant_coeff) + (application_state.brake.rear_pressure * rear_coeff));
+
+                        int_to_str(brake_bias);
+
                         CLAY_TEXT(
-                            CLAY_STRING("0%"),
+                            buffer_to_clay_string(),
                             CLAY_TEXT_CONFIG({
                                 .fontSize = 36,
                                 .textColor = COLOR_WHITE,

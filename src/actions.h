@@ -20,6 +20,7 @@ void clay_log_action(Clay_ElementId element_id, Clay_PointerData pointer_info, i
     }
 }
 
+#ifdef CAN_AVAILABLE
 void drive_action(Clay_ElementId element_id, Clay_PointerData pointer_info, intptr_t data)
 {
     assert(data == CLAY_NULL && "Button actions are specific, no args needed");
@@ -62,6 +63,8 @@ void mission_action(Clay_ElementId element_id, Clay_PointerData pointer_info, in
 
 void gear_action(Clay_ElementId element_id, Clay_PointerData pointer_info, intptr_t data)
 {
+    assert(data != 0 && "Gear shift should be UP (1) or DOWN (-1), not 0");
+
     if (data < 0)
     {
         // Gear down
@@ -74,5 +77,6 @@ void gear_action(Clay_ElementId element_id, Clay_PointerData pointer_info, intpt
 
     assert(0 && "unreachable: gear_action");
 }
+#endif
 
 #endif // ACTIONS_H_
