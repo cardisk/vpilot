@@ -589,12 +589,7 @@ Clay_RenderCommandArray vp_layout()
                             .width = CLAY_BORDER_ALL(2),
                         },
                     }) {
-                        float ant_coeff  = 8.0 * 24.0 * 24.0 * 220.0;
-                        float rear_coeff = 4.0 * 27.0 * 27.0 * 200.0;
-
-                        int brake_bias = (application_state.brake.front_pressure * 100.0f * ant_coeff) / ((application_state.brake.front_pressure * ant_coeff) + (application_state.brake.rear_pressure * rear_coeff));
-
-                        int_to_str(brake_bias);
+                        int_to_str(application_state.brake.calculated_bias);
 
                         CLAY_TEXT(
                             buffer_to_clay_string(),

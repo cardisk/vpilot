@@ -16,6 +16,10 @@
 #define VP_UPDATE_SKIP 1
 #define VP_UPDATE_FAIL -1
 
+// Globals
+const float ANT_COEFF  = 8.0 * 24.0 * 24.0 * 220.0;
+const float REAR_COEFF = 4.0 * 27.0 * 27.0 * 200.0;
+
 // Application state
 struct VPilot_
 {
@@ -24,6 +28,7 @@ struct VPilot_
         uint16_t front_pressure;
         uint16_t rear_pressure;
         uint8_t  bias;
+        int calculated_bias;
     } brake;
 
     struct
@@ -117,8 +122,9 @@ int vp_update()
     switch (frame.can_id)
     {
         case 101:
-            application_state.brake.front_pressure = (frame.data[0] << 8) | frame.data[1];
-            application_state.brake.rear_pressure  = (frame.data[2] << 8) | frame.data[3];
+            application_state.brake.front_pressure  = (frame.data[0] << 8) | frame.data[1];
+            application_state.brake.rear_pressure   = (frame.data[2] << 8) | frame.data[3];
+            application_state.brake.calculated_bias = (application_state.brake.front_pressure * 100.0f * ANT_COEFF) / ((application_state.brake.front_pressure * ANT_COEFF) + (application_state.brake.rear_pressure * REAR_COEFF));
             break;
 
         case 400:
