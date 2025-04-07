@@ -6,6 +6,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <stdarg.h>
 
 #include <string.h>
 #include <errno.h>
@@ -100,6 +101,35 @@ int can_read(int socket, struct can_frame *frame)
     }
 
     return CAN_READ_SUCCESS;
+}
+
+#define can_write(s, ...) can_write_impl_(s, __VA_ARGS__, 0)
+
+int can_write_impl_(int socket, canid_t id, ...)
+{
+    struct can_frame frame;
+
+    frame.can_id = id;
+
+    va_list args;
+    va_start(args, id);
+
+    uint8_t byte = va_arg(args, int);
+    uint8_t dlc = 0;
+    
+    while (byte != 0 && dlc < 8)
+    {
+        dlc++;
+        frame.data[dlc - 1] = byte;
+        byte = va_arg(args, int);
+    }
+
+    va_end(args);
+
+    // can_dlc is deprecated in favor of len
+    frame.len = dlc;
+
+    return write(socket, &frame, sizeof(struct can_frame));
 }
 
 #endif // CAN_H_
