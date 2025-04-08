@@ -1,6 +1,9 @@
 #ifndef ARENA_H_
 #define ARENA_H_
 
+#include <stdint.h>
+#include <string.h>
+
 struct Arena_
 {
     size_t used;
@@ -26,12 +29,19 @@ void *arena_alloc(Arena *arena, size_t size)
     return ptr;
 }
 
-inline void arena_clear(Arena *arena)
+void *arena_calloc(Arena *arena, size_t size)
+{
+    void *ptr = arena_alloc(arena, size);
+    memset(ptr, 0, size);
+    return ptr;
+}
+
+static inline void arena_clear(Arena *arena)
 {
     arena->used = 0;
 }
 
-inline void arena_free(Arena *arena)
+static inline void arena_free(Arena *arena)
 {
     free(arena->ptr);
 }

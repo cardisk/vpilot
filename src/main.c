@@ -21,8 +21,6 @@
 #include "state.h"
 #include "layout.h"
 
-#include "arena.h"
-
 // CLAY error handler
 void clay_handle_errors(Clay_ErrorData errorData)
 {

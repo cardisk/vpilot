@@ -220,10 +220,10 @@ Clay_RenderCommandArray vp_layout()
                             .width = CLAY_BORDER_ALL(2),
                         },
                     }) {
-                        int_to_str(application_state.engine.rpm);
+                        char *str = int_to_str(application_state.engine.rpm);
 
                         CLAY_TEXT(
-                            buffer_to_clay_string(),
+                            string_to_clay_string(str),
                             CLAY_TEXT_CONFIG({
                                 .fontSize = 36,
                                 .textColor = COLOR_WHITE,
@@ -292,10 +292,10 @@ Clay_RenderCommandArray vp_layout()
                             .width = CLAY_BORDER_ALL(2),
                         },
                     }) {
-                        int_to_str(application_state.temperature.water);
+                        char *str = int_to_str(application_state.temperature.water);
 
                         CLAY_TEXT(
-                            buffer_to_clay_string(),
+                            string_to_clay_string(str),
                             CLAY_TEXT_CONFIG({
                                 .fontSize = 36,
                                 .textColor = COLOR_WHITE,
@@ -355,10 +355,10 @@ Clay_RenderCommandArray vp_layout()
                                 .width = { 0, 2, 2, 2, 2 },
                             },
                         }) {
-                            float_to_str(application_state.pressure.oil);
+                            char *str = float_to_str(application_state.pressure.oil);
 
                             CLAY_TEXT(
-                                buffer_to_clay_string(),
+                                string_to_clay_string(str),
                                 CLAY_TEXT_CONFIG({
                                     .fontSize = 18,
                                     .textColor = COLOR_WHITE,
@@ -400,10 +400,10 @@ Clay_RenderCommandArray vp_layout()
                                 .width = { 0, 2, 2, 2, 2 },
                             },
                         }) {
-                            float_to_str(application_state.pressure.manifold);
+                            char *str = float_to_str(application_state.pressure.manifold);
 
                             CLAY_TEXT(
-                                buffer_to_clay_string(),
+                                string_to_clay_string(str),
                                 CLAY_TEXT_CONFIG({
                                     .fontSize = 18,
                                     .textColor = COLOR_WHITE,
@@ -445,10 +445,10 @@ Clay_RenderCommandArray vp_layout()
                                 .width = { 0, 2, 2, 2, 2 },
                             },
                         }) {
-                            float_to_str(application_state.pressure.fuel);
+                            char *str = float_to_str(application_state.pressure.fuel);
 
                             CLAY_TEXT(
-                                buffer_to_clay_string(),
+                                string_to_clay_string(str),
                                 CLAY_TEXT_CONFIG({
                                     .fontSize = 18,
                                     .textColor = COLOR_WHITE,
@@ -490,10 +490,10 @@ Clay_RenderCommandArray vp_layout()
                                 .width = { 0, 2, 2, 2, 2 },
                             },
                         }) {
-                            float_to_str(application_state.battery.voltage_12V);
+                            char *str = float_to_str(application_state.battery.voltage_12V);
 
                             CLAY_TEXT(
-                                buffer_to_clay_string(),
+                                string_to_clay_string(str),
                                 CLAY_TEXT_CONFIG({
                                     .fontSize = 18,
                                     .textColor = COLOR_WHITE,
@@ -537,13 +537,13 @@ Clay_RenderCommandArray vp_layout()
                             .width = CLAY_BORDER_ALL(2),
                         },
                     }) {
-                        int_to_str(application_state.engine.gear);
+                        char *str = int_to_str(application_state.engine.gear);
 
                         Clay_String text;
                         if (application_state.engine.gear == 0)
                             text = CLAY_STRING("N");
                         else
-                            text = buffer_to_clay_string();
+                            text = string_to_clay_string(str);
 
                         CLAY_TEXT(
                             text,
@@ -589,10 +589,10 @@ Clay_RenderCommandArray vp_layout()
                             .width = CLAY_BORDER_ALL(2),
                         },
                     }) {
-                        int_to_str(application_state.brake.calculated_bias);
+                        char *str = int_to_str(application_state.brake.calculated_bias);
 
                         CLAY_TEXT(
-                            buffer_to_clay_string(),
+                            string_to_clay_string(str),
                             CLAY_TEXT_CONFIG({
                                 .fontSize = 36,
                                 .textColor = COLOR_WHITE,

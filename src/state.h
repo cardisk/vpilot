@@ -10,6 +10,7 @@
 #endif
 
 #include "array.h"
+#include "arena.h"
 #include "errors.h"
 
 #define VP_UPDATE_SUCCESS 0
@@ -23,6 +24,7 @@ const float REAR_COEFF = 4.0 * 27.0 * 27.0 * 200.0;
 // Application state
 struct VPilot_
 {
+    // Pilot state
     struct
     {
         uint16_t front_pressure;
@@ -81,9 +83,12 @@ struct VPilot_
 
 	uint8_t lap_time_for_testing;
 
+    // VPilot state
 #ifdef CAN_AVAILABLE
     int can_socket;
 #endif
+
+    Arena layout_arena;
 };
 
 typedef struct VPilot_ VPilot;
@@ -101,11 +106,15 @@ int vp_init()
 
     application_state.can_socket = fd;
 #endif
+
+    application_state.layout_arena = arena_init(1024 * 1024);
     return 0;
 }
 
 int vp_update()
 {
+    arena_clear(&application_state.layout_arena);
+
 #ifdef CAN_AVAILABLE
     struct can_frame frame = {0};
     int read_result = can_read(application_state.can_socket, &frame);
@@ -234,6 +243,7 @@ int vp_update()
 void vp_destroy()
 {
     array_free(application_state.logs.errors);
+    arena_free(&application_state.layout_arena);
 
 #ifdef CAN_AVAILABLE
     can_close(application_state.can_socket);
