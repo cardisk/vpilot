@@ -10,6 +10,14 @@
 #include "state.h"
 #include "conversion.h"
 
+// Generic colors
+const Clay_Color COLOR_WHITE = { 255, 255, 255, 255 };
+const Clay_Color COLOR_BLACK = { 0, 0, 0, 255 };
+const Clay_Color COLOR_SOFT_BLACK = { 18, 18, 18, 255 };
+const Clay_Color COLOR_RED = { 255, 0, 0, 255 };
+const Clay_Color COLOR_GREEN = { 0, 255, 0, 255 };
+const Clay_Color COLOR_PURPLE = { 128, 0, 128, 255 };
+
 // Components specific colors
 const Clay_Color BTN_DRIVE = { 253, 218, 13, 255 };
 const Clay_Color BTN_DRIVE_HOVER = { 253, 218, 13, 192 };
@@ -35,12 +43,8 @@ const Clay_Color SELECTOR_HOVER = { 64, 64, 64, 192 };
 const Clay_Color GEAR_SHIFT = { 128, 128, 128, 255 };
 const Clay_Color GEAR_SHIFT_HOVER = { 128, 128, 128, 192 };
 
-// Generic colors
-const Clay_Color COLOR_WHITE = { 255, 255, 255, 255 };
-const Clay_Color COLOR_BLACK = { 0, 0, 0, 255 };
-const Clay_Color COLOR_SOFT_BLACK = { 18, 18, 18, 255 };
-const Clay_Color COLOR_RED = { 255, 0, 0, 255 };
-const Clay_Color COLOR_GREEN = { 0, 255, 0, 255 };
+const Clay_Color FLOATING_COLOR = COLOR_PURPLE;
+const Clay_Color FLOATING_COLOR_HOVER = { 100, 0, 100, 255 };
 
 Clay_RenderCommandArray vp_layout()
 {
@@ -61,7 +65,7 @@ Clay_RenderCommandArray vp_layout()
             },
         }) {
             CLAY({
-                .id = CLAY_ID("Drive Button"),
+                .id = CLAY_ID("DriveButton"),
                 .layout = {
                     .sizing = { .width = CLAY_SIZING_PERCENT(0.5), .height = CLAY_SIZING_GROW() },
                     .childAlignment = { .x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_CENTER }
@@ -82,7 +86,7 @@ Clay_RenderCommandArray vp_layout()
                 );
             }
             CLAY({
-                .id = CLAY_ID("Neutral Button"),
+                .id = CLAY_ID("NeutralButton"),
                 .layout = {
                     .sizing = { .width = CLAY_SIZING_PERCENT(0.5), .height = CLAY_SIZING_GROW() },
                     .childAlignment = { .x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_CENTER }
@@ -110,7 +114,7 @@ Clay_RenderCommandArray vp_layout()
             },
         }) {
             CLAY({
-                .id = CLAY_ID("Launch Button"),
+                .id = CLAY_ID("LaunchButton"),
                 .layout = {
                     .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
                     .childAlignment = { .x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_CENTER },
@@ -131,7 +135,7 @@ Clay_RenderCommandArray vp_layout()
                 );
             }
             CLAY({
-                .id = CLAY_ID("Forced Gear Button"),
+                .id = CLAY_ID("ForcedGearButton"),
                 .layout = {
                     .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
                     .childAlignment = { .x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_CENTER },
@@ -152,7 +156,7 @@ Clay_RenderCommandArray vp_layout()
                 );
             }
             CLAY({
-                .id = CLAY_ID("Tag Button"),
+                .id = CLAY_ID("TagButton"),
                 .layout = {
                     .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
                     .childAlignment = { .x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_CENTER }
@@ -174,6 +178,7 @@ Clay_RenderCommandArray vp_layout()
             }
         }
         CLAY({
+            .id = CLAY_ID("GUI"),
             .layout = { 
                 .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
                 .layoutDirection = CLAY_TOP_TO_BOTTOM,
@@ -619,14 +624,14 @@ Clay_RenderCommandArray vp_layout()
                     },
                 }) {
                     CLAY({
-                        .id = CLAY_ID("Gas Curve"),
+                        .id = CLAY_ID("GasCurve"),
                         .layout = { 
                             .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
                         },
                     }) {
                     }
                     CLAY({
-                        .id = CLAY_ID("Info Messages"),
+                        .id = CLAY_ID("InfoMessages"),
                         .layout = { 
                             .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
                         },
@@ -660,7 +665,7 @@ Clay_RenderCommandArray vp_layout()
             },
         }) {
             CLAY({
-                .id = CLAY_ID("Gear Down Button"),
+                .id = CLAY_ID("GearDownButton"),
                 .layout = { 
                     .sizing = { .width = CLAY_SIZING_PERCENT(0.3), .height = CLAY_SIZING_GROW() },
                     .childAlignment = { .x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_CENTER },
@@ -687,7 +692,159 @@ Clay_RenderCommandArray vp_layout()
                 },
             }) {
                 CLAY({
-                    .id = CLAY_ID("Ok Button"),
+                    .layout = {
+                        .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
+                    },
+                }) {
+                    CLAY({
+                        .id = CLAY_ID("GasCurveSelector"),
+                        .layout = { 
+                            .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
+                            .childAlignment = { .x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_CENTER },
+                        },
+                        .backgroundColor = Clay_Hovered() ? SELECTOR_HOVER : SELECTOR,
+                    }) {
+                        Clay_ElementId gas_curve_selector_id = Clay_GetElementId(CLAY_STRING("GasCurveSelector"));
+
+                        bool is_floating_visible = 
+                            Clay_PointerOver(gas_curve_selector_id)
+                            || 
+                            Clay_PointerOver(Clay_GetElementId(CLAY_STRING("FloatingCurveSelector")));
+
+                        if (is_floating_visible)
+                        {
+                            Clay_ElementData gas_curve_selector_data = Clay_GetElementData(gas_curve_selector_id);
+
+                            CLAY({
+                                .id = CLAY_ID("FloatingCurveSelector"),
+                                .layout = {
+                                    .sizing = { .width = CLAY_SIZING_FIXED(gas_curve_selector_data.boundingBox.width), .height = CLAY_SIZING_GROW() },
+                                    .layoutDirection = CLAY_TOP_TO_BOTTOM,
+                                },
+                                .floating = {
+                                    .parentId = CLAY_ID("GUI").id,
+                                    .attachTo = CLAY_ATTACH_TO_ELEMENT_WITH_ID,
+                                    .attachPoints = { CLAY_ATTACH_POINT_RIGHT_BOTTOM, CLAY_ATTACH_POINT_CENTER_BOTTOM },
+                                    .zIndex = 1,
+                                },
+                            }) {
+                                for (int i = 0; i < ARRAY_LEN(gas_curve_table); i++)
+                                {
+                                    char *str = arena_copy_string(&application_state.layout_arena, gas_curve_table[i]);
+                                    
+                                    CLAY({
+                                        .layout = {
+                                            .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
+                                            .childAlignment = { .x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_CENTER },
+                                        },
+                                        .border = {
+                                            .color = Clay_Hovered() ? FLOATING_COLOR_HOVER : FLOATING_COLOR,
+                                            .width = CLAY_BORDER_ALL(2),
+                                        },
+                                        .backgroundColor = Clay_Hovered() ? FLOATING_COLOR_HOVER : FLOATING_COLOR,
+                                    }) {
+#ifdef CAN_AVAILABLE
+                                        Clay_OnHover(&gas_curve_action, (intptr_t) i);
+#else
+                                        Clay_OnHover(&clay_log_action, CLAY_NULL);
+#endif
+
+                                        CLAY_TEXT(
+                                            string_to_clay_string(str),
+                                            CLAY_TEXT_CONFIG({
+                                                .fontSize = 18,
+                                                .textColor = COLOR_WHITE,
+                                            })
+                                        );
+                                    }
+                                }
+                            }
+                        }
+
+                        CLAY_TEXT(
+                            CLAY_STRING("GAS CURVE"),
+                            CLAY_TEXT_CONFIG({
+                                .fontSize = 24,
+                                .textColor = COLOR_WHITE,
+                            })
+                        );
+                    }
+                    CLAY({
+                        .id = CLAY_ID("MissionSelector"),
+                        .layout = { 
+                            .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
+                            .childAlignment = { .x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_CENTER },
+                        },
+                        .backgroundColor = Clay_Hovered() ? SELECTOR_HOVER : SELECTOR,
+                    }) {
+                        Clay_ElementId mission_selector_id = Clay_GetElementId(CLAY_STRING("MissionSelector"));
+
+                        bool is_floating_visible = 
+                            Clay_PointerOver(mission_selector_id)
+                            || 
+                            Clay_PointerOver(Clay_GetElementId(CLAY_STRING("FloatingMissionSelector")));
+
+                        if (is_floating_visible)
+                        {
+                            Clay_ElementData mission_selector_data = Clay_GetElementData(mission_selector_id);
+
+                            CLAY({
+                                .id = CLAY_ID("FloatingMissionSelector"),
+                                .layout = {
+                                    .sizing = { .width = CLAY_SIZING_FIXED(mission_selector_data.boundingBox.width), .height = CLAY_SIZING_GROW() },
+                                    .layoutDirection = CLAY_TOP_TO_BOTTOM,
+                                },
+                                .floating = {
+                                    .parentId = CLAY_ID("GUI").id,
+                                    .attachTo = CLAY_ATTACH_TO_ELEMENT_WITH_ID,
+                                    .attachPoints = { CLAY_ATTACH_POINT_LEFT_BOTTOM, CLAY_ATTACH_POINT_CENTER_BOTTOM },
+                                    .zIndex = 1,
+                                },
+                            }) {
+                                for (int i = 0; i < ARRAY_LEN(mission_table); i++)
+                                {
+                                    char *str = arena_copy_string(&application_state.layout_arena, mission_table[i]);
+                                    
+                                    CLAY({
+                                        .layout = {
+                                            .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
+                                            .childAlignment = { .x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_CENTER },
+                                        },
+                                        .border = {
+                                            .color = Clay_Hovered() ? FLOATING_COLOR_HOVER : FLOATING_COLOR,
+                                            .width = CLAY_BORDER_ALL(2),
+                                        },
+                                        .backgroundColor = Clay_Hovered() ? FLOATING_COLOR_HOVER : FLOATING_COLOR,
+                                    }) {
+#ifdef CAN_AVAILABLE
+                                        Clay_OnHover(&mission_action, (intptr_t) i);
+#else
+                                        Clay_OnHover(&clay_log_action, CLAY_NULL);
+#endif
+
+                                        CLAY_TEXT(
+                                            string_to_clay_string(str),
+                                            CLAY_TEXT_CONFIG({
+                                                .fontSize = 18,
+                                                .textColor = COLOR_WHITE,
+                                            })
+                                        );
+                                    }
+                                }
+                            }
+                        }
+
+                        CLAY_TEXT(
+                            CLAY_STRING("MISSION"),
+                            CLAY_TEXT_CONFIG({
+                                .fontSize = 24,
+                                .textColor = COLOR_WHITE,
+                            })
+                        );
+                    }
+                }
+                CLAY({
+                    .id = CLAY_ID("OkButton"),
                     .layout = {
                         .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
                         .childAlignment = { .x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_CENTER },
@@ -707,57 +864,9 @@ Clay_RenderCommandArray vp_layout()
                         })
                     );
                 }
-                CLAY({
-                    .layout = {
-                        .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
-                    },
-                }) {
-                    CLAY({
-                        .id = CLAY_ID("Gas Curve Selector"),
-                        .layout = { 
-                            .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
-                            .childAlignment = { .x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_CENTER },
-                        },
-                        .backgroundColor = Clay_Hovered() ? SELECTOR_HOVER : SELECTOR,
-                    }) {
-#ifdef CAN_AVAILABLE
-                        Clay_OnHover(&gas_curve_action, CLAY_NULL);
-#else
-                        Clay_OnHover(&clay_log_action, CLAY_NULL);
-#endif
-                        CLAY_TEXT(
-                            CLAY_STRING("GAS CURVE"),
-                            CLAY_TEXT_CONFIG({
-                                .fontSize = 24,
-                                .textColor = COLOR_WHITE,
-                            })
-                        );
-                    }
-                    CLAY({
-                        .id = CLAY_ID("Mission Selector"),
-                        .layout = { 
-                            .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
-                            .childAlignment = { .x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_CENTER },
-                        },
-                        .backgroundColor = Clay_Hovered() ? SELECTOR_HOVER : SELECTOR,
-                    }) {
-#ifdef CAN_AVAILABLE
-                        Clay_OnHover(&mission_action, CLAY_NULL);
-#else
-                        Clay_OnHover(&clay_log_action, CLAY_NULL);
-#endif
-                        CLAY_TEXT(
-                            CLAY_STRING("MISSION"),
-                            CLAY_TEXT_CONFIG({
-                                .fontSize = 24,
-                                .textColor = COLOR_WHITE,
-                            })
-                        );
-                    }
-                }
             }
             CLAY({
-                .id = CLAY_ID("Gear Up Button"),
+                .id = CLAY_ID("GearUpButton"),
                 .layout = { 
                     .sizing = { .width = CLAY_SIZING_PERCENT(0.3), .height = CLAY_SIZING_GROW() },
                     .childAlignment = { .x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_CENTER },

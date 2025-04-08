@@ -13,4 +13,6 @@
 #  define ERR(args...) SDL_LogError(0, args)
 #endif
 
+#define ARRAY_LEN(arr) sizeof(arr) / sizeof(arr[0])
+
 #endif // SHARED_H_

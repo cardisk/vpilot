@@ -97,8 +97,6 @@ void ok_action(Clay_ElementId element_id, Clay_PointerData pointer_info, intptr_
 
 void gas_curve_action(Clay_ElementId element_id, Clay_PointerData pointer_info, intptr_t data)
 {
-    assert(data == CLAY_NULL && "Button actions are specific, no args needed");
-
     if (pointer_info.state == CLAY_POINTER_DATA_PRESSED_THIS_FRAME)
     {
         assert(0 && "gas_curve_action is not implemented yet");
@@ -107,8 +105,6 @@ void gas_curve_action(Clay_ElementId element_id, Clay_PointerData pointer_info, 
 
 void mission_action(Clay_ElementId element_id, Clay_PointerData pointer_info, intptr_t data)
 {
-    assert(data == CLAY_NULL && "Button actions are specific, no args needed");
-
     if (pointer_info.state == CLAY_POINTER_DATA_PRESSED_THIS_FRAME)
     {
         assert(0 && "mission_action is not implemented yet");

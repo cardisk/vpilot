@@ -46,4 +46,15 @@ static inline void arena_free(Arena *arena)
     free(arena->ptr);
 }
 
+void *arena_copy_string(Arena *arena, const char *str)
+{
+    // Adding \0 inside the size
+    int str_size = strlen(str) + 1;
+
+    void *ptr = arena_calloc(arena, str_size);
+    memcpy(ptr, str, str_size);
+
+    return ptr;
+}
+
 #endif // ARENA_H_

@@ -21,6 +21,21 @@
 const float ANT_COEFF  = 8.0 * 24.0 * 24.0 * 220.0;
 const float REAR_COEFF = 4.0 * 27.0 * 27.0 * 200.0;
 
+const char *gas_curve_table[] = {
+    "LINEAR",
+    "PARABOLIC",
+};
+
+const char *mission_table[] = {
+    "MANUAL",
+    "ACCELERATION",
+    "SKIDPAD",
+    "TRACKDRIVE",
+    "EBS TEST",
+    "AUT. INSPECTION",
+    "AUTOCROSS",
+};
+
 // Application state
 struct VPilot_
 {
