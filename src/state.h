@@ -83,6 +83,8 @@ struct VPilot_
 
 	uint8_t lap_time_for_testing;
 
+    bool is_forced_gear;
+
     // VPilot state
 #ifdef CAN_AVAILABLE
     int can_socket;
