@@ -85,3 +85,11 @@ if (LINUX)
 else()
     message(WARNING "No socketCAN implementations for your system")
 endif()
+
+add_custom_command(
+    TARGET ${PROJECT_NAME}
+    POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ../resources
+        resources
+)

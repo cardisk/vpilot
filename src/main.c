@@ -41,9 +41,9 @@ int raylib_main(void)
 
     // Font stuff
     Font fonts[2];
-    fonts[0] = LoadFontEx("../resources/Roboto-Regular.ttf", 48, 0, 400);
+    fonts[0] = LoadFontEx("resources/Roboto-Regular.ttf", 48, 0, 400);
 	SetTextureFilter(fonts[0].texture, TEXTURE_FILTER_BILINEAR);
-    fonts[1] = LoadFontEx("../resources/Roboto-Regular.ttf", 32, 0, 400);
+    fonts[1] = LoadFontEx("resources/Roboto-Regular.ttf", 32, 0, 400);
     SetTextureFilter(fonts[1].texture, TEXTURE_FILTER_BILINEAR);
     Clay_SetMeasureTextFunction(Raylib_MeasureText, fonts);
 
@@ -163,7 +163,7 @@ int sdl2_main(void)
     Clay_Initialize(clayMemory, (Clay_Dimensions) { (float) width, (float) height }, (Clay_ErrorHandler) { clay_handle_errors, 0 });
 
     // Font stuff
-    TTF_Font *font = TTF_OpenFont("../resources/Roboto-Regular.ttf", 16);
+    TTF_Font *font = TTF_OpenFont("resources/Roboto-Regular.ttf", 16);
 
     if (!font) {
         ERR("Could not load font: %s\n", TTF_GetError());
