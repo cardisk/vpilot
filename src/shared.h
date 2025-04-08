@@ -10,7 +10,7 @@
 
 #ifdef RENDERER_SDL2
 #  define LOG(args...) SDL_Log(args)
-#  define ERR(args...) SDL_Log(args)
+#  define ERR(args...) SDL_LogError(0, args)
 #endif
 
 #endif // SHARED_H_

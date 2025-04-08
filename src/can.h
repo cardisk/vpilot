@@ -90,6 +90,9 @@ int can_read(int socket, struct can_frame *frame)
 
     if (nbytes < 0)
     {
+        if (errno == EAGAIN)
+            return CAN_READ_SKIP;
+
         ERR("%s", strerror(errno));
         return CAN_READ_FAIL;
     }

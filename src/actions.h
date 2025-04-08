@@ -74,8 +74,6 @@ void gear_action(Clay_ElementId element_id, Clay_PointerData pointer_info, intpt
     {
         // Gear up
     }
-
-    assert(0 && "unreachable: gear_action");
 }
 #endif
 

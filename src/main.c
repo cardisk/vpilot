@@ -21,6 +21,8 @@
 #include "state.h"
 #include "layout.h"
 
+#include "arena.h"
+
 // CLAY error handler
 void clay_handle_errors(Clay_ErrorData errorData)
 {
@@ -48,19 +50,19 @@ int raylib_main(void)
     Clay_SetMeasureTextFunction(Raylib_MeasureText, fonts);
 
     // Game Loop
-    while (!WindowShouldClose())
+    bool stopping = false;
+
+    while (!WindowShouldClose() && !stopping)
     {
         switch (vp_update())
         {
             case VP_UPDATE_FAIL:
                 // Some error occured, stopping...
-                CloseWindow();
-                break;
+                stopping = true;
+                continue;
 
             case VP_UPDATE_SKIP:
                 // Nothing to read...
-                continue;
-
             case VP_UPDATE_SUCCESS:
                 // Ok to render
                 break;
@@ -186,12 +188,15 @@ int sdl2_main(void)
         {
             case VP_UPDATE_FAIL:
                 // Some error occured, stopping...
-                goto QUIT;
+                {
+                    SDL_Event event;
+                    event.type = SDL_QUIT;
+                    SDL_PushEvent(&event);
+                }
+                break;
 
             case VP_UPDATE_SKIP:
                 // Nothing to read...
-                continue;
-
             case VP_UPDATE_SUCCESS:
                 // Ok to render
                 break;

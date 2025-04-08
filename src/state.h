@@ -107,7 +107,7 @@ int vp_init()
 int vp_update()
 {
 #ifdef CAN_AVAILABLE
-    struct can_frame frame;
+    struct can_frame frame = {0};
     int read_result = can_read(application_state.can_socket, &frame);
 
     switch (read_result)
@@ -167,59 +167,59 @@ int vp_update()
             break;
 
         case 701:
-            application_state.lap_time_for_testing = data[0];
+            application_state.lap_time_for_testing = frame.data[0];
             break;
 
         case 702:
-            application_state.battery.voltage_12V = (data[1] << 8) | data[0];
+            application_state.battery.voltage_12V = (frame.data[1] << 8) | frame.data[0];
             break;
 
         case 703:
-            application_state.brake.bias = data[0];
+            application_state.brake.bias = frame.data[0];
             break;
 
         case 800:
-            application_state.speed.frontL = (data[1] << 8) | data[0];
-            application_state.speed.frontR = (data[2] << 8) | data[3];
-            application_state.speed.rearL  = (data[4] << 8) | data[5];
-            application_state.speed.rearR  = (data[6] << 8) | data[7];
+            application_state.speed.frontL = (frame.data[1] << 8) | frame.data[0];
+            application_state.speed.frontR = (frame.data[2] << 8) | frame.data[3];
+            application_state.speed.rearL  = (frame.data[4] << 8) | frame.data[5];
+            application_state.speed.rearR  = (frame.data[6] << 8) | frame.data[7];
             break;
 
         case 801:
-            application_state.pressure.oil  = ((float) ((data[1] << 8) | data[0])) / 100.0;
-            application_state.pressure.fuel = ((float) ((data[3] << 8) | data[2])) / 100.0;
+            application_state.pressure.oil  = ((float) ((frame.data[1] << 8) | frame.data[0])) / 100.0;
+            application_state.pressure.fuel = ((float) ((frame.data[3] << 8) | frame.data[2])) / 100.0;
             break;
 
         case 802:
-            application_state.temperature.water = ((data[1] << 8) | data[0]) / 10;
-            application_state.temperature.air   = ((data[3] << 8) | data[2]) / 10;
+            application_state.temperature.water = ((frame.data[1] << 8) | frame.data[0]) / 10;
+            application_state.temperature.air   = ((frame.data[3] << 8) | frame.data[2]) / 10;
             break;
 
         case 803:
-            application_state.engine.tps        = ((data[1] << 8) | data[0]) / 10.0;
-            application_state.pressure.turbo    =  (data[3] << 8) | data[2];
-            application_state.pressure.manifold = ((float) ((data[5] << 8) | data[4])) / 1000.0;
+            application_state.engine.tps        = ((frame.data[1] << 8) | frame.data[0]) / 10.0;
+            application_state.pressure.turbo    =  (frame.data[3] << 8) | frame.data[2];
+            application_state.pressure.manifold = ((float) ((frame.data[5] << 8) | frame.data[4])) / 1000.0;
             break;
 
         case 804:
-            application_state.engine.gear = data[0];
+            application_state.engine.gear = frame.data[0];
             break;
         
         case 805:
-            application_state.engine.rpm = (data[1] << 8) | data[0];
-            application_state.engine.gas = (data[3] << 8) | data[2];
+            application_state.engine.rpm = (frame.data[1] << 8) | frame.data[0];
+            application_state.engine.gas = (frame.data[3] << 8) | frame.data[2];
             break;
         
         case 900:
-            application_state.battery.bms_voltage = data[0];
+            application_state.battery.bms_voltage = frame.data[0];
             break;
         
         case 901:
-            application_state.battery.soc = data[0];
+            application_state.battery.soc = frame.data[0];
             break;
         
         case 902:
-            application_state.battery.bms_temperature = data[0];
+            application_state.battery.bms_temperature = frame.data[0];
             break;
 
         default:
