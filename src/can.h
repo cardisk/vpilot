@@ -106,28 +106,27 @@ int can_read(int socket, struct can_frame *frame)
     return CAN_READ_SUCCESS;
 }
 
-#define can_write(s, ...) can_write_impl_(s, __VA_ARGS__, 0)
+#define can_write(s, id, ...) can_write_impl_(s, id, sizeof((int[]) { __VA_ARGS__ }) / sizeof(int), __VA_ARGS__)
 
-int can_write_impl_(int socket, canid_t id, ...)
+int can_write_impl_(int socket, canid_t id, int dlc, ...)
 {
     struct can_frame frame;
 
     frame.can_id = id;
 
     va_list args;
-    va_start(args, id);
+    va_start(args, dlc);
 
-    uint8_t byte = va_arg(args, int);
-    uint8_t dlc = 0;
-    
-    while (byte != 0 && dlc < 8)
+    for (int i = 0; i < dlc; i++)
     {
-        dlc++;
-        frame.data[dlc - 1] = byte;
-        byte = va_arg(args, int);
+        uint8_t byte = va_arg(args, int);
+        frame.data[i] = byte;
     }
 
     va_end(args);
+
+    if (dlc > 8)
+        dlc = 8;
 
     // can_dlc is deprecated in favor of len
     frame.len = dlc;

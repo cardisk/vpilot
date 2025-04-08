@@ -99,7 +99,22 @@ void gas_curve_action(Clay_ElementId element_id, Clay_PointerData pointer_info, 
 {
     if (pointer_info.state == CLAY_POINTER_DATA_PRESSED_THIS_FRAME)
     {
-        assert(0 && "gas_curve_action is not implemented yet");
+        switch (data)
+        {
+            case 0:
+                // dlc = 1, id = 305, data[0] = 0
+                can_write(application_state.can_socket, 305, 0);
+                break;
+
+            case 1:
+                // dlc = 1, id = 305, data[0] = 1
+                can_write(application_state.can_socket, 305, 1);
+                break;
+
+            default:
+                assert(0 && "unreachable: gas_curve_action not handled");
+                break;
+        }
     }
 }
 
