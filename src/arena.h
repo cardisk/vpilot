@@ -1,7 +1,6 @@
 #ifndef ARENA_H_
 #define ARENA_H_
 
-#include <cstdint>
 #include <stdlib.h>
 #include <stdint.h>
 #include <string.h>
