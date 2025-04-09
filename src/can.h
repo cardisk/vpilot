@@ -114,6 +114,9 @@ int can_write_impl_(int socket, canid_t id, int dlc, ...)
 
     frame.can_id = id;
 
+    if (dlc > 8)
+        dlc = 8;
+
     va_list args;
     va_start(args, dlc);
 
@@ -124,9 +127,6 @@ int can_write_impl_(int socket, canid_t id, int dlc, ...)
     }
 
     va_end(args);
-
-    if (dlc > 8)
-        dlc = 8;
 
     // can_dlc is deprecated in favor of len
     frame.len = dlc;
