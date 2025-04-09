@@ -253,9 +253,10 @@ Clay_RenderCommandArray vp_layout()
                             .width = CLAY_BORDER_ALL(2),
                         },
                     }) {
-                        // TODO: discover what this value is
+                        char *str = int_to_str(application_state.speed.gps);
+
                         CLAY_TEXT(
-                            CLAY_STRING("0"),
+                            string_to_clay_string(str),
                             CLAY_TEXT_CONFIG({
                                 .fontSize = 36,
                                 .textColor = COLOR_WHITE,
