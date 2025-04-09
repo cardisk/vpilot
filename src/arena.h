@@ -1,6 +1,8 @@
 #ifndef ARENA_H_
 #define ARENA_H_
 
+#include <cstdint>
+#include <stdlib.h>
 #include <stdint.h>
 #include <string.h>
 
@@ -16,7 +18,7 @@ Arena arena_init(size_t capacity)
 {
     Arena arena = {
         .used = 0,
-        .ptr  = malloc(capacity),
+        .ptr  = (uint8_t *) malloc(capacity),
     };
 
     return arena;
