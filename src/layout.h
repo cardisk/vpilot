@@ -208,479 +208,607 @@ Clay_RenderCommandArray vp_layout()
                 .layoutDirection = CLAY_TOP_TO_BOTTOM,
             },
         }) {
-            // Top row
-            CLAY({
-                .layout = { 
-                    .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
-                    .layoutDirection = CLAY_LEFT_TO_RIGHT,
-                },
-            }) {
-                CLAY({
-                    .layout = { 
-                        .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
-                        .layoutDirection = CLAY_TOP_TO_BOTTOM,
-                    },
-                }) {
+            switch (application_state.mission_selected)
+            {
+                case  NO_MISSION:
                     CLAY({
-                        .layout = {
-                            .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_PERCENT(0.33) },
-                            .childAlignment = { .x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_CENTER },
-                        },
-                        .border = {
-                            .color = COLOR_WHITE,
-                            .width = CLAY_BORDER_ALL(2),
-                        },
-                    }) {
-                        CLAY_TEXT(
-                            CLAY_STRING("ENGINE RPM"),
-                            CLAY_TEXT_CONFIG({
-                                .fontSize = 18,
-                                .textColor = COLOR_RED,
-                            })
-                        );
-                    }
-                    CLAY({
-                        .layout = {
+                        .layout = { 
                             .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
                             .childAlignment = { .x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_CENTER },
                         },
-                        .border = {
-                            .color = COLOR_WHITE,
-                            .width = CLAY_BORDER_ALL(2),
-                        },
                     }) {
-                        char *str = int_to_str(application_state.engine.rpm);
-
                         CLAY_TEXT(
-                            string_to_clay_string(str),
+                            CLAY_STRING("PLEASE SELECT A MISSION"),
                             CLAY_TEXT_CONFIG({
                                 .fontSize = 36,
                                 .textColor = COLOR_WHITE,
                             })
                         );
                     }
-                }
-                CLAY({
-                    .layout = { 
-                        .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
-                        .layoutDirection = CLAY_TOP_TO_BOTTOM,
-                        .childAlignment = { .x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_CENTER },
-                    },
-                }) {
+                    break;
+
+                case MANUAL:
+                    // Top row
                     CLAY({
-                        .layout = {
+                        .layout = { 
                             .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
-                            .childAlignment = { .x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_CENTER },
+                            .layoutDirection = CLAY_LEFT_TO_RIGHT,
+                        },
+                    }) {
+                        CLAY({
+                            .layout = { 
+                                .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
+                                .layoutDirection = CLAY_TOP_TO_BOTTOM,
+                            },
+                        }) {
+                            CLAY({
+                                .layout = {
+                                    .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_PERCENT(0.33) },
+                                    .childAlignment = { .x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_CENTER },
+                                },
+                                .border = {
+                                    .color = COLOR_WHITE,
+                                    .width = CLAY_BORDER_ALL(2),
+                                },
+                            }) {
+                                CLAY_TEXT(
+                                    CLAY_STRING("ENGINE RPM"),
+                                    CLAY_TEXT_CONFIG({
+                                        .fontSize = 18,
+                                        .textColor = COLOR_RED,
+                                    })
+                                );
+                            }
+                            CLAY({
+                                .layout = {
+                                    .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
+                                    .childAlignment = { .x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_CENTER },
+                                },
+                                .border = {
+                                    .color = COLOR_WHITE,
+                                    .width = CLAY_BORDER_ALL(2),
+                                },
+                            }) {
+                                char *str = int_to_str(application_state.engine.rpm);
+
+                                CLAY_TEXT(
+                                    string_to_clay_string(str),
+                                    CLAY_TEXT_CONFIG({
+                                        .fontSize = 36,
+                                        .textColor = COLOR_WHITE,
+                                    })
+                                );
+                            }
+                        }
+                        CLAY({
+                            .layout = { 
+                                .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
+                                .layoutDirection = CLAY_TOP_TO_BOTTOM,
+                                .childAlignment = { .x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_CENTER },
+                            },
+                        }) {
+                            CLAY({
+                                .layout = {
+                                    .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
+                                    .childAlignment = { .x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_CENTER },
+                                },
+                                .border = {
+                                    .color = COLOR_WHITE,
+                                    .width = CLAY_BORDER_ALL(2),
+                                },
+                            }) {
+                                char *str = int_to_str(application_state.speed.gps);
+
+                                CLAY_TEXT(
+                                    string_to_clay_string(str),
+                                    CLAY_TEXT_CONFIG({
+                                        .fontSize = 36,
+                                        .textColor = COLOR_WHITE,
+                                    })
+                                );
+                            }
+                        }
+                        CLAY({
+                            .layout = { 
+                                .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
+                                .layoutDirection = CLAY_TOP_TO_BOTTOM,
+                            },
+                        }) {
+                            CLAY({
+                                .layout = {
+                                    .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_PERCENT(0.33) },
+                                    .childAlignment = { .x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_CENTER },
+                                },
+                                .border = {
+                                    .color = COLOR_WHITE,
+                                    .width = CLAY_BORDER_ALL(2),
+                                },
+                            }) {
+                                CLAY_TEXT(
+                                    CLAY_STRING("WTS"),
+                                    CLAY_TEXT_CONFIG({
+                                        .fontSize = 18,
+                                        .textColor = COLOR_RED,
+                                    })
+                                );
+                            }
+                            CLAY({
+                                .layout = {
+                                    .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
+                                    .childAlignment = { .x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_CENTER },
+                                },
+                                .border = {
+                                    .color = COLOR_WHITE,
+                                    .width = CLAY_BORDER_ALL(2),
+                                },
+                            }) {
+                                char *str = int_to_str(application_state.temperature.water);
+
+                                CLAY_TEXT(
+                                    string_to_clay_string(str),
+                                    CLAY_TEXT_CONFIG({
+                                        .fontSize = 36,
+                                        .textColor = COLOR_WHITE,
+                                    })
+                                );
+                            }
+                        }
+                    }
+                    // Center row
+                    CLAY({
+                        .layout = { 
+                            .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
+                            .layoutDirection = CLAY_LEFT_TO_RIGHT,
                         },
                         .border = {
                             .color = COLOR_WHITE,
                             .width = CLAY_BORDER_ALL(2),
                         },
                     }) {
-                        char *str = int_to_str(application_state.speed.gps);
+                        CLAY({
+                            .layout = { 
+                                .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
+                                .layoutDirection = CLAY_TOP_TO_BOTTOM,
+                            },
+                        }) {
+                            CLAY({
+                                .layout = { 
+                                    .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
+                                    .layoutDirection = CLAY_LEFT_TO_RIGHT,
+                                },
+                            }) {
+                                CLAY({
+                                    .layout = {
+                                        .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
+                                        .childAlignment = { .x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_CENTER },
+                                    },
+                                    .border = {
+                                        .color = COLOR_WHITE,
+                                        .width = { 2, 0, 2, 2, 2 },
+                                    },
+                                }) {
+                                    CLAY_TEXT(
+                                        CLAY_STRING("OPS"),
+                                        CLAY_TEXT_CONFIG({
+                                            .fontSize = 18,
+                                            .textColor = COLOR_WHITE,
+                                        })
+                                    );
+                                }
+                                CLAY({
+                                    .layout = {
+                                        .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
+                                        .childAlignment = { .x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_CENTER },
+                                    },
+                                    .border = {
+                                        .color = COLOR_WHITE,
+                                        .width = { 0, 2, 2, 2, 2 },
+                                    },
+                                }) {
+                                    char *str = float_to_str(application_state.pressure.oil);
 
+                                    CLAY_TEXT(
+                                        string_to_clay_string(str),
+                                        CLAY_TEXT_CONFIG({
+                                            .fontSize = 18,
+                                            .textColor = COLOR_WHITE,
+                                        })
+                                    );
+                                }
+                            }
+                            CLAY({
+                                .layout = { 
+                                    .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
+                                    .layoutDirection = CLAY_LEFT_TO_RIGHT,
+                                },
+                            }) {
+                                CLAY({
+                                    .layout = {
+                                        .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
+                                        .childAlignment = { .x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_CENTER },
+                                    },
+                                    .border = {
+                                        .color = COLOR_WHITE,
+                                        .width = { 2, 0, 2, 2, 2 },
+                                    },
+                                }) {
+                                    CLAY_TEXT(
+                                        CLAY_STRING("MAPS"),
+                                        CLAY_TEXT_CONFIG({
+                                            .fontSize = 18,
+                                            .textColor = COLOR_WHITE,
+                                        })
+                                    );
+                                }
+                                CLAY({
+                                    .layout = {
+                                        .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
+                                        .childAlignment = { .x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_CENTER },
+                                    },
+                                    .border = {
+                                        .color = COLOR_WHITE,
+                                        .width = { 0, 2, 2, 2, 2 },
+                                    },
+                                }) {
+                                    char *str = float_to_str(application_state.pressure.manifold);
+
+                                    CLAY_TEXT(
+                                        string_to_clay_string(str),
+                                        CLAY_TEXT_CONFIG({
+                                            .fontSize = 18,
+                                            .textColor = COLOR_WHITE,
+                                        })
+                                    );
+                                }
+                            }
+                            CLAY({
+                                .layout = { 
+                                    .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
+                                    .layoutDirection = CLAY_LEFT_TO_RIGHT,
+                                },
+                            }) {
+                                CLAY({
+                                    .layout = {
+                                        .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
+                                        .childAlignment = { .x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_CENTER },
+                                    },
+                                    .border = {
+                                        .color = COLOR_WHITE,
+                                        .width = { 2, 0, 2, 2, 2 },
+                                    },
+                                }) {
+                                    CLAY_TEXT(
+                                        CLAY_STRING("FPS"),
+                                        CLAY_TEXT_CONFIG({
+                                            .fontSize = 18,
+                                            .textColor = COLOR_WHITE,
+                                        })
+                                    );
+                                }
+                                CLAY({
+                                    .layout = {
+                                        .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
+                                        .childAlignment = { .x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_CENTER },
+                                    },
+                                    .border = {
+                                        .color = COLOR_WHITE,
+                                        .width = { 0, 2, 2, 2, 2 },
+                                    },
+                                }) {
+                                    char *str = float_to_str(application_state.pressure.fuel);
+
+                                    CLAY_TEXT(
+                                        string_to_clay_string(str),
+                                        CLAY_TEXT_CONFIG({
+                                            .fontSize = 18,
+                                            .textColor = COLOR_WHITE,
+                                        })
+                                    );
+                                }
+                            }
+                            CLAY({
+                                .layout = { 
+                                    .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
+                                    .layoutDirection = CLAY_LEFT_TO_RIGHT,
+                                },
+                            }) {
+                                CLAY({
+                                    .layout = {
+                                        .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
+                                        .childAlignment = { .x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_CENTER },
+                                    },
+                                    .border = {
+                                        .color = COLOR_WHITE,
+                                        .width = { 2, 0, 2, 2, 2 },
+                                    },
+                                }) {
+                                    CLAY_TEXT(
+                                        CLAY_STRING("12V"),
+                                        CLAY_TEXT_CONFIG({
+                                            .fontSize = 18,
+                                            .textColor = COLOR_WHITE,
+                                        })
+                                    );
+                                }
+                                CLAY({
+                                    .layout = {
+                                        .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
+                                        .childAlignment = { .x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_CENTER },
+                                    },
+                                    .border = {
+                                        .color = COLOR_WHITE,
+                                        .width = { 0, 2, 2, 2, 2 },
+                                    },
+                                }) {
+                                    char *str = float_to_str(application_state.battery.voltage_12V);
+
+                                    CLAY_TEXT(
+                                        string_to_clay_string(str),
+                                        CLAY_TEXT_CONFIG({
+                                            .fontSize = 18,
+                                            .textColor = COLOR_WHITE,
+                                        })
+                                    );
+                                }
+                            }
+                        }
+                        CLAY({
+                            .layout = { 
+                                .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
+                                .layoutDirection = CLAY_TOP_TO_BOTTOM,
+                            },
+                        }) {
+                            CLAY({
+                                .layout = {
+                                    .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_PERCENT(0.33) },
+                                    .childAlignment = { .x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_CENTER },
+                                },
+                                .backgroundColor = COLOR_WHITE,
+                                .border = {
+                                    .color = COLOR_WHITE,
+                                    .width = CLAY_BORDER_ALL(2),
+                                },
+                            }) {
+                                CLAY_TEXT(
+                                    CLAY_STRING("GEAR"),
+                                    CLAY_TEXT_CONFIG({
+                                        .fontSize = 18,
+                                        .textColor = COLOR_BLACK,
+                                    })
+                                );
+                            }
+                            CLAY({
+                                .layout = {
+                                    .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
+                                    .childAlignment = { .x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_CENTER },
+                                },
+                                .border = {
+                                    .color = COLOR_WHITE,
+                                    .width = CLAY_BORDER_ALL(2),
+                                },
+                            }) {
+                                char *str = int_to_str(application_state.engine.gear);
+
+                                Clay_String text;
+                                if (application_state.engine.gear == 0)
+                                    text = CLAY_STRING("N");
+                                else
+                                    text = string_to_clay_string(str);
+
+                                CLAY_TEXT(
+                                    text,
+                                    CLAY_TEXT_CONFIG({
+                                        .fontSize = 48,
+                                        .textColor = COLOR_GREEN,
+                                    })
+                                );
+                            }
+                        }
+                        CLAY({
+                            .layout = { 
+                                .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
+                                .layoutDirection = CLAY_TOP_TO_BOTTOM,
+                            },
+                        }) {
+                            CLAY({
+                                .layout = {
+                                    .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_PERCENT(0.33) },
+                                    .childAlignment = { .x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_CENTER },
+                                },
+                                .border = {
+                                    .color = COLOR_WHITE,
+                                    .width = CLAY_BORDER_ALL(2),
+                                },
+                            }) {
+                                CLAY_TEXT(
+                                    CLAY_STRING("BRAKE BIAS (%)"),
+                                    CLAY_TEXT_CONFIG({
+                                        .fontSize = 18,
+                                        .textColor = COLOR_RED,
+                                    })
+                                );
+                            }
+                            CLAY({
+                                .layout = {
+                                    .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
+                                    .childAlignment = { .x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_CENTER },
+                                    .layoutDirection = CLAY_LEFT_TO_RIGHT,
+                                },
+                                .border = {
+                                    .color = COLOR_WHITE,
+                                    .width = CLAY_BORDER_ALL(2),
+                                },
+                            }) {
+                                char *str = int_to_str(application_state.brake.calculated_bias);
+
+                                CLAY_TEXT(
+                                    string_to_clay_string(str),
+                                    CLAY_TEXT_CONFIG({
+                                        .fontSize = 36,
+                                        .textColor = COLOR_WHITE,
+                                    })
+                                );
+                            }
+                        }
+                    }
+                    // Bottom row
+                    CLAY({
+                        .layout = { 
+                            .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
+                            .layoutDirection = CLAY_LEFT_TO_RIGHT,
+                        },
+                    }) {
+                        CLAY({
+                            .layout = { 
+                                .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
+                                .layoutDirection = CLAY_TOP_TO_BOTTOM,
+                            },
+                            .border = {
+                                .color = COLOR_WHITE,
+                                .width = CLAY_BORDER_ALL(2),
+                            },
+                        }) {
+                            CLAY({
+                                .id = CLAY_ID("GasCurve"),
+                                .layout = { 
+                                    .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
+                                },
+                            }) {
+                            }
+                            CLAY({
+                                .id = CLAY_ID("InfoMessages"),
+                                .layout = { 
+                                    .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
+                                },
+                            }) {
+                            }
+                        }
+                        CLAY({
+                            .layout = { 
+                                .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
+                                .childAlignment = { .x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_CENTER },
+                            },
+                            .border = {
+                                .color = COLOR_WHITE,
+                                .width = CLAY_BORDER_ALL(2),
+                            },
+                        }) {
+                            CLAY_TEXT(
+                                CLAY_STRING("ERROR LOGS INSIDE TERMINAL"),
+                                CLAY_TEXT_CONFIG({
+                                    .fontSize = 18,
+                                    .textColor = COLOR_RED,
+                                })
+                            );
+                        }
+                    }
+                    break;
+
+                case ACCELERATION:
+                    CLAY({
+                        .layout = { 
+                            .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
+                            .childAlignment = { .x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_CENTER },
+                        },
+                    }) {
                         CLAY_TEXT(
-                            string_to_clay_string(str),
+                            CLAY_STRING("ACCELERATION"),
                             CLAY_TEXT_CONFIG({
                                 .fontSize = 36,
                                 .textColor = COLOR_WHITE,
                             })
                         );
                     }
-                }
-                CLAY({
-                    .layout = { 
-                        .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
-                        .layoutDirection = CLAY_TOP_TO_BOTTOM,
-                    },
-                }) {
+                    break;
+
+                case SKIDPAD:
                     CLAY({
-                        .layout = {
-                            .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_PERCENT(0.33) },
-                            .childAlignment = { .x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_CENTER },
-                        },
-                        .border = {
-                            .color = COLOR_WHITE,
-                            .width = CLAY_BORDER_ALL(2),
-                        },
-                    }) {
-                        CLAY_TEXT(
-                            CLAY_STRING("WTS"),
-                            CLAY_TEXT_CONFIG({
-                                .fontSize = 18,
-                                .textColor = COLOR_RED,
-                            })
-                        );
-                    }
-                    CLAY({
-                        .layout = {
+                        .layout = { 
                             .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
                             .childAlignment = { .x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_CENTER },
                         },
-                        .border = {
-                            .color = COLOR_WHITE,
-                            .width = CLAY_BORDER_ALL(2),
-                        },
                     }) {
-                        char *str = int_to_str(application_state.temperature.water);
-
                         CLAY_TEXT(
-                            string_to_clay_string(str),
+                            CLAY_STRING("SKIDPAD"),
                             CLAY_TEXT_CONFIG({
                                 .fontSize = 36,
                                 .textColor = COLOR_WHITE,
                             })
                         );
                     }
-                }
-            }
-            // Center row
-            CLAY({
-                .layout = { 
-                    .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
-                    .layoutDirection = CLAY_LEFT_TO_RIGHT,
-                },
-                .border = {
-                    .color = COLOR_WHITE,
-                    .width = CLAY_BORDER_ALL(2),
-                },
-            }) {
-                CLAY({
-                    .layout = { 
-                        .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
-                        .layoutDirection = CLAY_TOP_TO_BOTTOM,
-                    },
-                }) {
+                    break;
+
+                case TRACKDRIVE:
                     CLAY({
                         .layout = { 
                             .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
-                            .layoutDirection = CLAY_LEFT_TO_RIGHT,
-                        },
-                    }) {
-                        CLAY({
-                            .layout = {
-                                .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
-                                .childAlignment = { .x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_CENTER },
-                            },
-                            .border = {
-                                .color = COLOR_WHITE,
-                                .width = { 2, 0, 2, 2, 2 },
-                            },
-                        }) {
-                            CLAY_TEXT(
-                                CLAY_STRING("OPS"),
-                                CLAY_TEXT_CONFIG({
-                                    .fontSize = 18,
-                                    .textColor = COLOR_WHITE,
-                                })
-                            );
-                        }
-                        CLAY({
-                            .layout = {
-                                .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
-                                .childAlignment = { .x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_CENTER },
-                            },
-                            .border = {
-                                .color = COLOR_WHITE,
-                                .width = { 0, 2, 2, 2, 2 },
-                            },
-                        }) {
-                            char *str = float_to_str(application_state.pressure.oil);
-
-                            CLAY_TEXT(
-                                string_to_clay_string(str),
-                                CLAY_TEXT_CONFIG({
-                                    .fontSize = 18,
-                                    .textColor = COLOR_WHITE,
-                                })
-                            );
-                        }
-                    }
-                    CLAY({
-                        .layout = { 
-                            .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
-                            .layoutDirection = CLAY_LEFT_TO_RIGHT,
-                        },
-                    }) {
-                        CLAY({
-                            .layout = {
-                                .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
-                                .childAlignment = { .x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_CENTER },
-                            },
-                            .border = {
-                                .color = COLOR_WHITE,
-                                .width = { 2, 0, 2, 2, 2 },
-                            },
-                        }) {
-                            CLAY_TEXT(
-                                CLAY_STRING("MAPS"),
-                                CLAY_TEXT_CONFIG({
-                                    .fontSize = 18,
-                                    .textColor = COLOR_WHITE,
-                                })
-                            );
-                        }
-                        CLAY({
-                            .layout = {
-                                .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
-                                .childAlignment = { .x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_CENTER },
-                            },
-                            .border = {
-                                .color = COLOR_WHITE,
-                                .width = { 0, 2, 2, 2, 2 },
-                            },
-                        }) {
-                            char *str = float_to_str(application_state.pressure.manifold);
-
-                            CLAY_TEXT(
-                                string_to_clay_string(str),
-                                CLAY_TEXT_CONFIG({
-                                    .fontSize = 18,
-                                    .textColor = COLOR_WHITE,
-                                })
-                            );
-                        }
-                    }
-                    CLAY({
-                        .layout = { 
-                            .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
-                            .layoutDirection = CLAY_LEFT_TO_RIGHT,
-                        },
-                    }) {
-                        CLAY({
-                            .layout = {
-                                .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
-                                .childAlignment = { .x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_CENTER },
-                            },
-                            .border = {
-                                .color = COLOR_WHITE,
-                                .width = { 2, 0, 2, 2, 2 },
-                            },
-                        }) {
-                            CLAY_TEXT(
-                                CLAY_STRING("FPS"),
-                                CLAY_TEXT_CONFIG({
-                                    .fontSize = 18,
-                                    .textColor = COLOR_WHITE,
-                                })
-                            );
-                        }
-                        CLAY({
-                            .layout = {
-                                .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
-                                .childAlignment = { .x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_CENTER },
-                            },
-                            .border = {
-                                .color = COLOR_WHITE,
-                                .width = { 0, 2, 2, 2, 2 },
-                            },
-                        }) {
-                            char *str = float_to_str(application_state.pressure.fuel);
-
-                            CLAY_TEXT(
-                                string_to_clay_string(str),
-                                CLAY_TEXT_CONFIG({
-                                    .fontSize = 18,
-                                    .textColor = COLOR_WHITE,
-                                })
-                            );
-                        }
-                    }
-                    CLAY({
-                        .layout = { 
-                            .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
-                            .layoutDirection = CLAY_LEFT_TO_RIGHT,
-                        },
-                    }) {
-                        CLAY({
-                            .layout = {
-                                .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
-                                .childAlignment = { .x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_CENTER },
-                            },
-                            .border = {
-                                .color = COLOR_WHITE,
-                                .width = { 2, 0, 2, 2, 2 },
-                            },
-                        }) {
-                            CLAY_TEXT(
-                                CLAY_STRING("12V"),
-                                CLAY_TEXT_CONFIG({
-                                    .fontSize = 18,
-                                    .textColor = COLOR_WHITE,
-                                })
-                            );
-                        }
-                        CLAY({
-                            .layout = {
-                                .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
-                                .childAlignment = { .x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_CENTER },
-                            },
-                            .border = {
-                                .color = COLOR_WHITE,
-                                .width = { 0, 2, 2, 2, 2 },
-                            },
-                        }) {
-                            char *str = float_to_str(application_state.battery.voltage_12V);
-
-                            CLAY_TEXT(
-                                string_to_clay_string(str),
-                                CLAY_TEXT_CONFIG({
-                                    .fontSize = 18,
-                                    .textColor = COLOR_WHITE,
-                                })
-                            );
-                        }
-                    }
-                }
-                CLAY({
-                    .layout = { 
-                        .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
-                        .layoutDirection = CLAY_TOP_TO_BOTTOM,
-                    },
-                }) {
-                    CLAY({
-                        .layout = {
-                            .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_PERCENT(0.33) },
                             .childAlignment = { .x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_CENTER },
-                        },
-                        .backgroundColor = COLOR_WHITE,
-                        .border = {
-                            .color = COLOR_WHITE,
-                            .width = CLAY_BORDER_ALL(2),
                         },
                     }) {
                         CLAY_TEXT(
-                            CLAY_STRING("GEAR"),
-                            CLAY_TEXT_CONFIG({
-                                .fontSize = 18,
-                                .textColor = COLOR_BLACK,
-                            })
-                        );
-                    }
-                    CLAY({
-                        .layout = {
-                            .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
-                            .childAlignment = { .x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_CENTER },
-                        },
-                        .border = {
-                            .color = COLOR_WHITE,
-                            .width = CLAY_BORDER_ALL(2),
-                        },
-                    }) {
-                        char *str = int_to_str(application_state.engine.gear);
-
-                        Clay_String text;
-                        if (application_state.engine.gear == 0)
-                            text = CLAY_STRING("N");
-                        else
-                            text = string_to_clay_string(str);
-
-                        CLAY_TEXT(
-                            text,
-                            CLAY_TEXT_CONFIG({
-                                .fontSize = 48,
-                                .textColor = COLOR_GREEN,
-                            })
-                        );
-                    }
-                }
-                CLAY({
-                    .layout = { 
-                        .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
-                        .layoutDirection = CLAY_TOP_TO_BOTTOM,
-                    },
-                }) {
-                    CLAY({
-                        .layout = {
-                            .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_PERCENT(0.33) },
-                            .childAlignment = { .x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_CENTER },
-                        },
-                        .border = {
-                            .color = COLOR_WHITE,
-                            .width = CLAY_BORDER_ALL(2),
-                        },
-                    }) {
-                        CLAY_TEXT(
-                            CLAY_STRING("BRAKE BIAS (%)"),
-                            CLAY_TEXT_CONFIG({
-                                .fontSize = 18,
-                                .textColor = COLOR_RED,
-                            })
-                        );
-                    }
-                    CLAY({
-                        .layout = {
-                            .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
-                            .childAlignment = { .x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_CENTER },
-                            .layoutDirection = CLAY_LEFT_TO_RIGHT,
-                        },
-                        .border = {
-                            .color = COLOR_WHITE,
-                            .width = CLAY_BORDER_ALL(2),
-                        },
-                    }) {
-                        char *str = int_to_str(application_state.brake.calculated_bias);
-
-                        CLAY_TEXT(
-                            string_to_clay_string(str),
+                            CLAY_STRING("TRACKDRIVE"),
                             CLAY_TEXT_CONFIG({
                                 .fontSize = 36,
                                 .textColor = COLOR_WHITE,
                             })
                         );
                     }
-                }
-            }
-            // Bottom row
-            CLAY({
-                .layout = { 
-                    .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
-                    .layoutDirection = CLAY_LEFT_TO_RIGHT,
-                },
-            }) {
-                CLAY({
-                    .layout = { 
-                        .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
-                        .layoutDirection = CLAY_TOP_TO_BOTTOM,
-                    },
-                    .border = {
-                        .color = COLOR_WHITE,
-                        .width = CLAY_BORDER_ALL(2),
-                    },
-                }) {
+                    break;
+
+                case EBS_TEST:
                     CLAY({
-                        .id = CLAY_ID("GasCurve"),
                         .layout = { 
                             .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
+                            .childAlignment = { .x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_CENTER },
                         },
                     }) {
+                        CLAY_TEXT(
+                            CLAY_STRING("EBS TEST"),
+                            CLAY_TEXT_CONFIG({
+                                .fontSize = 36,
+                                .textColor = COLOR_WHITE,
+                            })
+                        );
                     }
+                    break;
+
+                case INSPECTION:
                     CLAY({
-                        .id = CLAY_ID("InfoMessages"),
                         .layout = { 
                             .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
+                            .childAlignment = { .x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_CENTER },
                         },
                     }) {
+                        CLAY_TEXT(
+                            CLAY_STRING("AUT. INSPECTION"),
+                            CLAY_TEXT_CONFIG({
+                                .fontSize = 36,
+                                .textColor = COLOR_WHITE,
+                            })
+                        );
                     }
-                }
-                CLAY({
-                    .layout = { 
-                        .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
-                        .childAlignment = { .x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_CENTER },
-                    },
-                    .border = {
-                        .color = COLOR_WHITE,
-                        .width = CLAY_BORDER_ALL(2),
-                    },
-                }) {
-                    CLAY_TEXT(
-                        CLAY_STRING("ERROR LOGS INSIDE TERMINAL"),
-                        CLAY_TEXT_CONFIG({
-                            .fontSize = 18,
-                            .textColor = COLOR_RED,
-                        })
-                    );
-                }
+                    break;
+
+                case AUTOCROSS:
+                    CLAY({
+                        .layout = { 
+                            .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
+                            .childAlignment = { .x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_CENTER },
+                        },
+                    }) {
+                        CLAY_TEXT(
+                            CLAY_STRING("AUTOCROSS"),
+                            CLAY_TEXT_CONFIG({
+                                .fontSize = 36,
+                                .textColor = COLOR_WHITE,
+                            })
+                        );
+                    }
+                    break;
+
+                default:
+                    assert(0 && "unreachable: mission requested is not available");
+                    break;
             }
         }
         CLAY({
@@ -842,7 +970,8 @@ Clay_RenderCommandArray vp_layout()
                                         .backgroundColor = Clay_Hovered() ? FLOATING_COLOR_HOVER : FLOATING_COLOR,
                                     }) {
 #ifdef CAN_AVAILABLE
-                                        Clay_OnHover(&mission_action, (intptr_t) i);
+                                        // Mission enumeration is offset by 1
+                                        Clay_OnHover(&mission_action, (intptr_t) i + 1);
 #else
                                         Clay_OnHover(&clay_log_action, CLAY_NULL);
 #endif

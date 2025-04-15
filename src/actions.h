@@ -133,7 +133,46 @@ void mission_action(Clay_ElementId element_id, Clay_PointerData pointer_info, in
 {
     if (pointer_info.state == CLAY_POINTER_DATA_PRESSED_THIS_FRAME)
     {
-        assert(0 && "mission_action is not implemented yet");
+        Mission mission = (Mission) data;
+
+        switch (mission)
+        {
+            case NO_MISSION:
+                assert(0 && "unreachable: NO_MISSION should not appear here");
+
+            case MANUAL:
+                can_write(application_state.can_socket, 290, MISSION_MODE_MANUAL,     (int) (mission - 1));
+                break;
+
+            case ACCELERATION:
+                can_write(application_state.can_socket, 290, MISSION_MODE_AUTONOMOUS, (int) (mission - 1));
+                break;
+
+            case SKIDPAD:
+                can_write(application_state.can_socket, 290, MISSION_MODE_AUTONOMOUS, (int) (mission - 1));
+                break;
+
+            case TRACKDRIVE:
+                can_write(application_state.can_socket, 290, MISSION_MODE_AUTONOMOUS, (int) (mission - 1));
+                break;
+
+            case EBS_TEST:
+                can_write(application_state.can_socket, 290, MISSION_MODE_AUTONOMOUS, (int) (mission - 1));
+                break;
+
+            case INSPECTION:
+                can_write(application_state.can_socket, 290, MISSION_MODE_AUTONOMOUS, (int) (mission - 1));
+                break;
+
+            case AUTOCROSS:
+                can_write(application_state.can_socket, 290, MISSION_MODE_AUTONOMOUS, (int) (mission - 1));
+                break;
+
+            default:
+                assert(0 && "unreachable: mission_action doesn't handle this mission");
+        }
+
+        application_state.mission_selected = mission;
     }
 }
 

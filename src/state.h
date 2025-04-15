@@ -36,6 +36,23 @@ const char *mission_table[] = {
     "AUTOCROSS",
 };
 
+#define MISSION_MODE_MANUAL     1
+#define MISSION_MODE_AUTONOMOUS 2
+
+enum Mission_
+{
+    NO_MISSION = 0,
+    MANUAL,
+    ACCELERATION,
+    SKIDPAD,
+    TRACKDRIVE,
+    EBS_TEST,
+    INSPECTION,
+    AUTOCROSS,
+};
+
+typedef enum Mission_ Mission;
+
 // Application state
 struct VPilot_
 {
@@ -99,6 +116,7 @@ struct VPilot_
 	uint8_t lap_time_for_testing;
 
     bool is_forced_gear;
+    Mission mission_selected;
 
     // VPilot state
 #ifdef CAN_AVAILABLE
