@@ -162,7 +162,9 @@ int vp_update()
             break;
             
         case 402:
-            // Ignoring HARD RESET
+            vp_destroy();
+            if (vp_init() < 0)
+                return VP_UPDATE_FAIL;
             break;
 
         case 403:

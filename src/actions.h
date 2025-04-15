@@ -20,7 +20,7 @@ void clay_log_action(Clay_ElementId element_id, Clay_PointerData pointer_info, i
     
     if (pointer_info.state == CLAY_POINTER_DATA_PRESSED_THIS_FRAME)
     {
-        LOG("CLICK: '%s'\n", element_id.stringId.chars);
+        LOG("CLICK: '%s'", element_id.stringId.chars);
     }
 }
 
@@ -33,6 +33,17 @@ void drive_action(Clay_ElementId element_id, Clay_PointerData pointer_info, intp
     {
         // dlc = 1, id = 302, data[0] = 2
         can_write(application_state.can_socket, 302, 2);
+    }
+}
+
+void hard_reset_action(Clay_ElementId element_id, Clay_PointerData pointer_info, intptr_t data)
+{
+    assert(data == CLAY_NULL && "Button actions are specific, no args needed");
+
+    if (pointer_info.state == CLAY_POINTER_DATA_PRESSED_THIS_FRAME)
+    {
+        // dlc = 1, id = 291, data[0] = 255
+        can_write(application_state.can_socket, 291, 255);
     }
 }
 

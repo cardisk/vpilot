@@ -22,6 +22,9 @@ const Clay_Color COLOR_PURPLE = { 128, 0, 128, 255 };
 const Clay_Color BTN_DRIVE = { 253, 218, 13, 255 };
 const Clay_Color BTN_DRIVE_HOVER = { 253, 218, 13, 192 };
 
+const Clay_Color BTN_HARD_RESET = { 112, 41, 99, 255 };
+const Clay_Color BTN_HARD_RESET_HOVER = { 112, 41, 99, 192 };
+
 const Clay_Color BTN_NEUTRAL = { 0, 71, 171, 255 };
 const Clay_Color BTN_NEUTRAL_HOVER = { 0, 71, 171, 192 };
 
@@ -67,7 +70,7 @@ Clay_RenderCommandArray vp_layout()
             CLAY({
                 .id = CLAY_ID("DriveButton"),
                 .layout = {
-                    .sizing = { .width = CLAY_SIZING_PERCENT(0.5), .height = CLAY_SIZING_GROW() },
+                    .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
                     .childAlignment = { .x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_CENTER }
                 },
                 .backgroundColor = Clay_Hovered() ? BTN_DRIVE_HOVER : BTN_DRIVE,
@@ -86,9 +89,30 @@ Clay_RenderCommandArray vp_layout()
                 );
             }
             CLAY({
+                .id = CLAY_ID("HardResetButton"),
+                .layout = {
+                    .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
+                    .childAlignment = { .x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_CENTER }
+                },
+                .backgroundColor = Clay_Hovered() ? BTN_HARD_RESET_HOVER : BTN_HARD_RESET,
+            }) {
+#ifdef CAN_AVAILABLE
+                Clay_OnHover(&hard_reset_action, CLAY_NULL);
+#else
+                Clay_OnHover(&clay_log_action, CLAY_NULL);
+#endif
+                CLAY_TEXT(
+                    CLAY_STRING("HARD RESET"),
+                    CLAY_TEXT_CONFIG({
+                        .fontSize = 24,
+                        .textColor = COLOR_WHITE,
+                    })
+                );
+            }
+            CLAY({
                 .id = CLAY_ID("NeutralButton"),
                 .layout = {
-                    .sizing = { .width = CLAY_SIZING_PERCENT(0.5), .height = CLAY_SIZING_GROW() },
+                    .sizing = { .width = CLAY_SIZING_GROW(), .height = CLAY_SIZING_GROW() },
                     .childAlignment = { .x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_CENTER }
                 },
                 .backgroundColor = Clay_Hovered() ? BTN_NEUTRAL_HOVER : BTN_NEUTRAL,
