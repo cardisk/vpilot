@@ -25,9 +25,9 @@ $ cmake --build .
 
 ## LICENSES
 
-[vpilot](https://github.com/cardisk/vpilot/blob/main/LICENSE)
-[raylib](https://github.com/cardisk/vpilot/blob/main/thirdparty_licenses/raylib_LICENSE)
-[SDL](https://github.com/cardisk/vpilot/blob/main/thirdparty_licenses/SDL_LICENSE)
-[SDL_ttf](https://github.com/cardisk/vpilot/blob/main/thirdparty_licenses/SDL_ttf_LICENSE)
-[SDL_image](https://github.com/cardisk/vpilot/blob/main/thirdparty_licenses/SDL_image_LICENSE)
-[clay](https://github.com/cardisk/vpilot/blob/main/thirdparty_licenses/SDL_image_LICENSE)
+- [vpilot](https://github.com/cardisk/vpilot/blob/main/LICENSE)
+- [raylib](https://github.com/cardisk/vpilot/blob/main/thirdparty_licenses/raylib_LICENSE)
+- [SDL](https://github.com/cardisk/vpilot/blob/main/thirdparty_licenses/SDL_LICENSE)
+- [SDL_ttf](https://github.com/cardisk/vpilot/blob/main/thirdparty_licenses/SDL_ttf_LICENSE)
+- [SDL_image](https://github.com/cardisk/vpilot/blob/main/thirdparty_licenses/SDL_image_LICENSE)
+- [clay](https://github.com/cardisk/vpilot/blob/main/thirdparty_licenses/SDL_image_LICENSE)
