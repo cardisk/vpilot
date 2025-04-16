@@ -12,5 +12,3 @@
 - [X] Critical errors display with crash
 
 ## Maybe
-- [ ] Support for SDL3 rendering
-- [ ] Hot reload the layout
