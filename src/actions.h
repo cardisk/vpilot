@@ -9,6 +9,8 @@
 
 // Custom includes
 #include "shared.h"
+#include "state.h"
+#include "array.h"
 
 #ifdef CAN_AVAILABLE
 #  include "can.h"
@@ -104,6 +106,8 @@ void tag_action(Clay_ElementId element_id, Clay_PointerData pointer_info, intptr
 void ok_action(Clay_ElementId element_id, Clay_PointerData pointer_info, intptr_t data)
 {
     assert(data == CLAY_NULL && "Button actions are specific, no args needed");
+
+    array_clear(&application_state.logs.errors);
 }
 
 void gas_curve_action(Clay_ElementId element_id, Clay_PointerData pointer_info, intptr_t data)

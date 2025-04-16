@@ -7,9 +7,9 @@
 
 - [X] Default action for buttons when CAN not available
 
-- [ ] Different GUI with different missions
-- [ ] Non-critical errors display with OK button action
-- [ ] Critical errors display with crash
+- [X] Different GUI with different missions
+- [X] Non-critical errors display with OK button action
+- [X] Critical errors display with crash
 
 ## Maybe
 - [ ] Support for SDL3 rendering

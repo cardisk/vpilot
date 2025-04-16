@@ -172,7 +172,16 @@ int vp_update()
             break;
 
         case 400:
-            // TODO: Error logging
+            {
+                Error e = { 
+                    .group_id = frame.data[0], 
+                    .msg_id = frame.data[1],
+                };
+
+                ERR("----------------------------------------------------------");
+                ERR("!!>> %s", fatal_to_string(e));
+                ERR("----------------------------------------------------------");
+            }
             return VP_UPDATE_FAIL;
 
         case 401:
@@ -205,6 +214,13 @@ int vp_update()
                 if (found) break;
 
                 array_push(&application_state.logs.errors, e);
+
+                WARN("----------------------------------------------------------");
+                array_foreach(&application_state.logs.errors, Error, it)
+                {
+                    WARN(">> %s", warning_to_string(*it));
+                }
+                WARN("----------------------------------------------------------");
             }
             break;
 

@@ -252,7 +252,7 @@ int main(void)
 #ifndef CAN_AVAILABLE
     WARN("----------------------------------------------------------");
     WARN("Your system is not a Linux distro, SocketCAN not available");
-    WARN(">> Buttons will log themselves");
+    WARN(">> Button actions replaced with logs");
     WARN("----------------------------------------------------------");
 #endif
 
