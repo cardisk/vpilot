@@ -284,12 +284,6 @@ int main(int argc, char **argv)
     exec_result = sdl2_main();
 #endif
 
-#if 0
-#ifdef RENDERER_SDL3
-    exec_result = sdl3_main();
-#endif
-#endif
-
     vp_destroy();
     return exec_result;
 }
