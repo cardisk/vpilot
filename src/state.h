@@ -134,7 +134,7 @@ VPilot application_state = {0};
 int vp_init()
 {
 #ifdef CAN_AVAILABLE
-    int fd = can_init("vcan0");
+    int fd = can_init();
 
     // Just propagate the failure
     if (fd < 0) return -1;

@@ -29,7 +29,9 @@
 #define CAN_READ_SKIP 1
 #define CAN_READ_FAIL -1
 
-int can_init(const char *interface_name)
+char *interface_name = NULL;
+
+int can_init()
 {
     int sock = socket(PF_CAN, SOCK_RAW, CAN_RAW);
     if (sock < 0)

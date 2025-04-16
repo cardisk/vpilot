@@ -21,6 +21,10 @@
 #include "state.h"
 #include "layout.h"
 
+#ifdef CAN_AVAILABLE
+#  include "can.h"
+#endif
+
 // CLAY error handler
 void clay_handle_errors(Clay_ErrorData errorData)
 {
@@ -247,13 +251,24 @@ QUIT:
 }
 #endif
 
-int main(void)
+int main(int argc, char **argv)
 {
 #ifndef CAN_AVAILABLE
     WARN("----------------------------------------------------------");
     WARN("Your system is not a Linux distro, SocketCAN not available");
     WARN(">> Button actions replaced with logs");
     WARN("----------------------------------------------------------");
+#else
+    if (argc > 2)
+    {
+        ERR("Usage: vpilot [interface_name]");
+        return 1;
+    }
+
+    if (argc == 2)
+        interface_name = argv[1];
+    else
+        interface_name = "vcan0";
 #endif
 
     // Init application state
