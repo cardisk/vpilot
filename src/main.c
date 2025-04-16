@@ -255,7 +255,7 @@ int main(int argc, char **argv)
 {
 #ifndef CAN_AVAILABLE
     WARN("----------------------------------------------------------");
-    WARN("Your system is not a Linux distro, SocketCAN not available");
+    WARN("Your system is not a Linux distro, socketCAN not available");
     WARN(">> Button actions replaced with logs");
     WARN("----------------------------------------------------------");
 #else

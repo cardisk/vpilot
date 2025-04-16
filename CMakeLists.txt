@@ -5,6 +5,16 @@ set(CMAKE_C_STANDARD 99)
 include(FetchContent)
 set(FETCHCONTENT_QUIET FALSE)
 
+if (NOT CMAKE_BUILD_TYPE)
+    message(WARNING "CMAKE_BUILD_TYPE not specified, defaulting to 'Debug'")
+    set(CMAKE_BUILD_TYPE "Debug")
+endif()
+
+if (NOT RENDERER)
+    message(WARNING "RENDERER not specified, defaulting to 'Raylib'")
+    set(RENDERER "Raylib")
+endif()
+
 if (RENDERER MATCHES "Raylib")
     FetchContent_Declare(
         raylib
