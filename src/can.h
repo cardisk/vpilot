@@ -58,6 +58,77 @@ int can_init()
         return -1;
     }
 
+    struct can_filter filters[18];
+
+    // CAN filters
+    int index = 0;
+
+#define can_add_filter(msg_id)                  \
+    do                                          \
+    {                                           \
+        filters[index].can_id   = (msg_id);     \
+        filters[index].can_mask = CAN_SFF_MASK; \
+        index++;                                \
+    }                                           \
+    while (0)
+
+    // Brake driver
+    can_add_filter(101);
+
+    // Critical error messages
+    can_add_filter(400);
+    // Non-critical error messages
+    can_add_filter(403);
+    // Info message
+    can_add_filter(401);
+    
+    // Hard Reset
+    can_add_filter(402);
+
+    // GPS speed
+    can_add_filter(700);
+
+    // Lap time for testing
+    can_add_filter(701);
+
+    // 12V battery voltage
+    can_add_filter(702);
+
+    // Brake bias
+    can_add_filter(703);
+
+    // Wheel speed
+    can_add_filter(800);
+
+    // OPS & FPS
+    can_add_filter(801);
+
+    // WTS & ATS
+    can_add_filter(802);
+
+    // Turbo pressure and collector
+    can_add_filter(803);
+
+    // Gear
+    can_add_filter(804);
+
+    // RPM
+    can_add_filter(805);
+
+
+    // 24V battery voltage
+    can_add_filter(900);
+
+    // 24V battery SoC
+    can_add_filter(901);
+
+    // 24V battery temperature
+    can_add_filter(902);
+
+#undef can_add_filter
+
+    setsockopt(sock, SOL_CAN_RAW, CAN_RAW_FILTER, &filters, sizeof(filters));
+
     int sock_flags = fcntl(sock, F_GETFL, 0);
     if (sock_flags < 0)
     {
