@@ -190,6 +190,7 @@ int vp_update()
             
         case 402:
             vp_destroy();
+            application_state = {0};
             if (vp_init() < 0)
                 return VP_UPDATE_FAIL;
             break;
