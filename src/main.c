@@ -249,6 +249,13 @@ QUIT:
 
 int main(void)
 {
+#ifndef CAN_AVAILABLE
+    WARN("----------------------------------------------------------");
+    WARN("Your system is not a Linux distro, SocketCAN not available");
+    WARN(">> Buttons will log themselves");
+    WARN("----------------------------------------------------------");
+#endif
+
     // Init application state
     if (vp_init() < 0) return 1;
 
